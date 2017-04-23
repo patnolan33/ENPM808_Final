@@ -2,13 +2,17 @@
 
 ## Table of Contents
 - [Overview](#overview)
+- [License](#license)
 - [Prerequisites / Dependencies](#prerequisites-dependencies)
 - [SIP Process](#sip_process)
 - [Build Steps](#build-steps)
 
 ## <a name="overview"></a> Overview
 
-## <a name"sip_process"></a> SIP Process
+## <a name="license"></a> License
+This project is under the [BSD License](./LICENSE)
+
+## <a name="sip_process"></a> SIP Process
 The SIP Process followed is detailed in a spreadsheet at the following link:
 [SIP Process](https://docs.google.com/spreadsheets/d/1oXFDLQsNwkKpbx6czQWAZedOgvgVFRhxESJdv_tiWR0/edit?usp=sharing)
 
