@@ -1,4 +1,5 @@
 # ENPM808X_Final
+[![Build Status](https://travis-ci.org/patnolan33/ENPM808_Final.svg?branch=master)](https://travis-ci.org/patnolan33/ENPM808_Final)
 
 ## Table of Contents
 - [Overview](#overview)

@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<package>
+  <name>enpm808_final</name>
+  <version>0.0.0</version>
+  <description>Patrick Nolans enpm808_final package for ENPM808X</description>
+
+  <maintainer email="patnolan33@gmail.com">Patrick Nolan</maintainer>
+  <license>BSD</license>
+  <url type="website">https://github.com/patnolan33/ENPM808_Final</url>
+  <author email="patnolan33@gmail.com">Patrick Nolan</author>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <build_depend>roscpp</build_depend>
+  <build_depend>geometry_msgs</build_depend>
+  <build_depend>move_base_msgs</build_depend>
+  <build_depend>sensor_msgs</build_depend>
+
+  <run_depend>roscpp</run_depend>
+  <run_depend>geometry_msgs</run_depend>
+  <run_depend>move_base_msgs</run_depend>
+  <run_depend>sensor_msgs</run_depend>
+
+</package>
