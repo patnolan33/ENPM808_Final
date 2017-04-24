@@ -43,11 +43,32 @@
 
 #include <ros/ros.h>
 #include <gtest/gtest.h>
-#include "obstacleDetection.hpp"
+#include <obstacleDetection.hpp>
 
 /**
- * @brief Test that should pass
+ * @brief Test the ability for the obstacle detector to properly detect an obstacle
  */
-TEST(TestSuite, obstacle_should_pass) {
-  EXPECT_EQ(1, 1);
+TEST(TestSuite, detect_obstacle) {
+  ObstacleDetection *obstacleDetection;
+
+  EXPECT_EQ(true, obstacleDetection->detectObstacle());
+}
+
+/**
+ * @brief Test the ability to set a new threshold for the obstacle detector
+ */
+TEST(TestSuite, set_threshold) {
+  ObstacleDetection *obstacleDetection = new ObstacleDetection(1.0);
+  obstacleDetection->setDistanceThreshold(2.0);
+
+  EXPECT_EQ(2.0, obstacleDetection->getDistanceThreshold());
+}
+
+/**
+ * @brief Test the ability to get the current threshold for the obstacle detector
+ */
+TEST(TestSuite, get_threshold) {
+  ObstacleDetection *obstacleDetection = new ObstacleDetection(1.0);
+
+  EXPECT_EQ(1.0, obstacleDetection->getDistanceThreshold());
 }

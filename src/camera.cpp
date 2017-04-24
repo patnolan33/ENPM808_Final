@@ -41,12 +41,20 @@
  *  @copyright BSD
  */
 
+#include <string>
 #include <stdlib.h>
 #include <ros/ros.h>
-#include "camera.hpp"
+#include <camera.hpp>
 
 /**
  * @brief Camera constructor
  */
 Camera::Camera() {
+}
+
+/**
+ * @brief Take an image of the current RGB camera view for later analysis
+ */
+std::string Camera::takeImage() {
+	return "";
 }

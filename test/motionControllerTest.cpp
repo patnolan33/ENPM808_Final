@@ -43,11 +43,46 @@
 
 #include <ros/ros.h>
 #include <gtest/gtest.h>
-#include "motionController.hpp"
+#include <motionController.hpp>
 
 /**
- * @brief Test that should pass
+ * @brief Test the ability of the motion controller to determine the correct action
  */
-TEST(TestSuite, motion_should_pass) {
-  EXPECT_EQ(1, 1);
+TEST(TestSuite, determine_action) {
+  MotionController *motionController = new MotionController(1.0);
+  geometry_msgs::Twist tmpMsg;
+  tmpMsg.linear.x = 0.0;
+  tmpMsg.linear.y = 0.0;
+  tmpMsg.linear.z = 0.0;
+  tmpMsg.angular.x = 0.0;
+  tmpMsg.angular.y = 0.0;
+  tmpMsg.angular.z = 0.0;
+
+  geometry_msgs::Twist msg = motionController->determineAction();
+  bool isEqual = false;
+  if(tmpMsg.linear.x == msg.linear.x && tmpMsg.linear.y == msg.linear.y && tmpMsg.linear.z == msg.linear.z &&
+      tmpMsg.angular.x == msg.angular.x && tmpMsg.angular.y == msg.angular.y && tmpMsg.linear.z == msg.angular.z) {
+    isEqual = true;
+  }
+
+  EXPECT_EQ(true, isEqual);
+}
+
+/**
+ * @brief Test the ability to set a new forward speed
+ */
+TEST(TestSuite, set_speed) {
+  MotionController *motionController = new MotionController(1.0);
+  motionController->setForwardSpeed(2.0);
+
+  EXPECT_EQ(2.0, motionController->getForwardSpeed());
+}
+
+/**
+ * @brief Test the ability to return the current forward speed
+ */
+TEST(TestSuite, get_speed) {
+  MotionController *motionController = new MotionController(1.0);
+
+  EXPECT_EQ(1.0, motionController->getForwardSpeed());
 }

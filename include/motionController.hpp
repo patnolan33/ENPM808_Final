@@ -41,6 +41,11 @@
  *  @copyright BSD
  */
 
+#include <stdlib.h>
+#include <ros/ros.h>
+#include <geometry_msgs/Twist.h>
+#include <obstacleDetection.hpp>
+
 /**
  * @brief MotionController class handles determining vehicle control actions
  */
@@ -49,7 +54,37 @@ class MotionController {
   /**
    * @brief MotionController constructor
    */
-  MotionController();
+  MotionController(double forwardSpeed);
+
+  /**
+   * @brief Determine a vehicle action based on results from the obstacle detector
+   */
+  geometry_msgs::Twist determineAction();
+
+  /**
+   * @brief change the forward speed of the robot
+   */
+  void setForwardSpeed(double speed) {
+    forwardSpeed = speed;
+  }
+  ;
+
+  /**
+   * @brief return the current forward speed of the robot
+   */
+  double getForwardSpeed() {
+    return forwardSpeed;
+  }
+  ;
 
  private:
+  /**
+   * @brief container for an obstacle detector for the vehicle
+   */
+  ObstacleDetection *obstacleDetection;
+
+  /**
+   * @brief container for the forward speed of the vehicle
+   */
+  double forwardSpeed;
 };

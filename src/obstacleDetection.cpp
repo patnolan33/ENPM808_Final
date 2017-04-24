@@ -41,6 +41,8 @@
  *  @copyright BSD
  */
 
+#include <octomap/octomap.h>
+#include <octomap/OcTree.h>
 #include <stdlib.h>
 #include <ros/ros.h>
 #include "obstacleDetection.hpp"
@@ -48,5 +50,14 @@
 /**
  * @brief ObstacleDetection constructor
  */
-ObstacleDetection::ObstacleDetection() {
+ObstacleDetection::ObstacleDetection(double threshold)
+    : distanceThreshold(threshold) {
+  worldModel = new octomap::OcTree(0.1);
+}
+
+/**
+ * @brief detect if the vehicle is about to collide with an obstacle or not
+ */
+bool ObstacleDetection::detectObstacle() {
+  return true;
 }

@@ -43,11 +43,12 @@
 
 #include <ros/ros.h>
 #include <gtest/gtest.h>
-#include "camera.hpp"
+#include <camera.hpp>
 
 /**
- * @brief Test that should pass
+ * @brief Test the camera's ability to take and save an image
  */
-TEST(TestSuite, camera_should_pass) {
-  EXPECT_EQ(1, 1);
+TEST(TestSuite, take_image) {
+  Camera *camera = new Camera();
+  EXPECT_EQ("", camera->takeImage());
 }

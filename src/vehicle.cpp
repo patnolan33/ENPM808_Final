@@ -49,6 +49,13 @@
  * @brief Vehicle constructor
  */
 Vehicle::Vehicle() {
+  motionController = new MotionController(1.0);
 }
 
+/**
+ * @brief drive the vehicle autonomously using laser scan data as sensor feedback
+ */
+void Vehicle::drive() {
+  return;
+}
 

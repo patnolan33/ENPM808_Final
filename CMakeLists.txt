@@ -13,16 +13,30 @@ find_package(catkin REQUIRED COMPONENTS
 catkin_package()
 
 ## Build vehicle 
-include_directories(include ${catkin_INCLUDE_DIRS})
+find_package(octomap REQUIRED)
+include_directories(include ${catkin_INCLUDE_DIRS} ${OCTOMAP_INCLUDE_DIRS})
 
 add_executable(vehicle src/main.cpp src/vehicle.cpp src/camera.cpp src/motionController.cpp src/obstacleDetection.cpp)
-target_link_libraries(vehicle ${catkin_LIBRARIES})
+target_link_libraries(vehicle ${catkin_LIBRARIES} ${OCTOMAP_LIBRARIES})
 
 
 ## Add gtest based cpp test target and link libraries
-catkin_add_gtest(enpm808_finalTest test/enpm808_finalTest.launch test/main.cpp test/vehicleTest.cpp test/cameraTest.cpp test/motionControllerTest.cpp test/obstacleDetectionTest.cpp)
+catkin_add_gtest(
+	enpm808_finalTest 
+	test/enpm808_finalTest.launch 
+	test/main.cpp 
+	test/vehicleTest.cpp 
+	test/cameraTest.cpp 
+	test/motionControllerTest.cpp 
+	test/obstacleDetectionTest.cpp
+	src/vehicle.cpp
+	src/camera.cpp
+	src/motionController.cpp
+	src/obstacleDetection.cpp
+)
+
 if(TARGET enpm808_finalTest)
-  target_link_libraries(enpm808_finalTest ${catkin_LIBRARIES})
+  target_link_libraries(enpm808_finalTest ${catkin_LIBRARIES} ${OCTOMAP_LIBRARIES})
     
   add_dependencies(
 	  enpm808_finalTest

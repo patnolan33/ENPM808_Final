@@ -31,6 +31,11 @@ This package requires that [ROS](http://wiki.ros.org/indigo/Installation) is ins
 ```
 sudo apt-get install ros-indigo-turtlebot-gazebo ros-indigo-turtlebot-apps ros-indigo-turtlebot-rviz-launchers
 ```
+This package also requires Octomap. If not installed, Octomap can be installed using the following command:
+```
+sudo apt-get install ros-indigo-octomap
+```
+
 This package also depends on the following ROS packages:
 -roscpp
 -geometry_msgs

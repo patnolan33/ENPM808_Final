@@ -41,6 +41,11 @@
  *  @copyright BSD
  */
 
+#include <octomap/octomap.h>
+#include <octomap/OcTree.h>
+#include <stdlib.h>
+#include <ros/ros.h>
+
 /**
  * @brief ObstacleDetection class handles determining if the vehicle is going to collide using laser scans
  */
@@ -49,7 +54,41 @@ class ObstacleDetection {
   /**
    * @brief ObstacleDetection constructor
    */
-  ObstacleDetection();
+  ObstacleDetection(double threshold);
+
+  /**
+   * @brief detect if the vehicle is about to collide with an obstacle or not
+   */
+  bool detectObstacle();
+
+  /**
+   * @brief return the current threshold for how close the vehicle should get to an object
+   */
+  double getDistanceThreshold() { return distanceThreshold; };
+
+  /**
+   * @brief set the threshold for how close the vehicle should get to an object
+   */
+  void setDistanceThreshold(double threshold) { distanceThreshold = threshold; };
 
  private:
+  /**
+   * @brief container for the world model, stored as an OcTree
+   */
+  octomap::OcTree* worldModel;
+
+  /**
+   * @brief container for a ROS node handler
+   */
+  ros::NodeHandle nh;
+
+  /**
+   * @brief container for a ROS subscriber for the laser scan data
+   */
+  ros::Subscriber laserSub;
+
+  /**
+   * @brief container for the threshold for how close the vehicle should get to an object
+   */
+  double distanceThreshold;
 };

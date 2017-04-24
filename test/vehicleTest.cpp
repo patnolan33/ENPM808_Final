@@ -43,6 +43,7 @@
 
 #include <ros/ros.h>
 #include <gtest/gtest.h>
+#include <vehicle.hpp>
 
 /**
  * @brief Test that should pass

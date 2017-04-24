@@ -41,6 +41,11 @@
  *  @copyright BSD
  */
 
+#include <string>
+#include <vector>
+#include <stdlib.h>
+#include <ros/ros.h>
+
 /**
  * @brief Camera class handles viewing onboard imagery and taking images
  */
@@ -51,5 +56,24 @@ class Camera {
    */
   Camera();
 
+  /**
+   * @brief Take an image of the current RGB camera view for later analysis
+   */
+  std::string takeImage();
+
  private:
+  /**
+   * @brief container for the filenames of each saved image
+   */
+  std::vector<std::string> savedImages;
+
+  /**
+   * @brief container for a ROS node handler
+   */
+  ros::NodeHandle nh;
+
+  /**
+   * @brief container for a ROS subscriber for camera topics
+   */
+  ros::Subscriber cameraSub;
 };
