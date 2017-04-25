@@ -44,7 +44,6 @@ if(CATKIN_ENABLE_TESTING)
   )
   add_dependencies(
 	  enpm808_finalTest
-	  vehicle
 	  ${catkin_EXPORTED_TARGETS}
   )
 endif()

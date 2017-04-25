@@ -1,9 +1,4 @@
 <launch>
-  <node pkg="enpm808_final" 
-  		name="vehicle"
-  		type="vehicle" 
-        output="screen"
-		launch-prefix="gnome-terminal --command" 
-	/>
+  <node pkg="enpm808_final" name="vehicle" type="vehicle" />
   <test pkg="enpm808_final" test-name="enpm808_finalTest" type="enpm808_finalTest" />
 </launch>
