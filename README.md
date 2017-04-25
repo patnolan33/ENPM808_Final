@@ -7,6 +7,8 @@
 - [Prerequisites / Dependencies](#prerequisites-dependencies)
 - [SIP Process](#sip_process)
 - [Build Steps](#build-steps)
+- [Run Steps](#run-steps)
+- [Testing](#testing)
 
 ## <a name="overview"></a> Overview
 The purpose of this repository is an implementation of the "area mapper" robot for ACME robotics (ENPM 808X Final Project). Specifically, this software implements ROS and the [Turtlebot](https://wiki.ros.org/Robots/TurtleBot) platform along with ROS nodes and services to illustrate an autonomous navigation/mapping capability. At a high level, the simulated robot is placed in an environment where it does not know the structure of the world. Its job is to move through the environment and avoid obstacles, all while mapping the environment via laser scans and providing an operator a visual feed of an onboard camera. The operator, via ROS services, can adjust the speed of the robot, the distance threshold that constitutes an impending collision, and also initiate a "take picture" command to capture an image of interest. In addition, an operator can initiate a "stop motion" command as well as a "resume motion" command to the robot. 
@@ -64,3 +66,28 @@ $ cd ..
 $ catkin_make
 ```
 You should now see a enpm808_final directory in `catkin_ws/build`. 
+
+## <a name="run-steps"></a> Run steps
+This step assumes that a roscore is running. If one is not running, open a new terminal and run `roscore`. To run the package, open a new terminal, change directories into your catkin workspace, run the vehicle ROS node:
+```
+$ cd <PATH_TO_YOUR_DIRECTORY>/catkin_ws
+$ rosrun enpm808_final vehicle
+```
+
+## <a name="testing"></a> Testing
+Unit tests have been written for this repository. To run the tests, open a new terminal and change directories to your catkin workspace. Then, run the tests using catkin and the test launch file:
+```
+$ cd <PATH_TO_YOUR_DIRECTORY>/catkin_ws/src
+$ catkin_make run_tests && catkin_test_results
+```
+You should see a summary of the number of tests passed/failed output on the screen. 
+
+## <a name="todo"></a> TODO
+- Implement `Camera` class
+- Implement `ObstacleDetection` class
+- Implement `MotionController` class
+- Implement `Vehicle` class
+- Implement services:
+  - "Stop motion" command
+  - "Resume motion" command
+  - "Take image" command
