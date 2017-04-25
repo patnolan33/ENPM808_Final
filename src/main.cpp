@@ -45,23 +45,26 @@
 #include <ros/ros.h>
 
 int main(int argc, char **argv) {
-  // Initialize ROS and name our node "enpm808_final"
-  ros::init(argc, argv, "enpm808_final");
+	// Initialize ROS and name our node "enpm808_final"
+	ros::init(argc, argv, "enpm808_final");
 
-  // Handle for the process node. Will handle initialization and
-  //   cleanup of the node
-  ros::NodeHandle n;
+	// Handle for the process node. Will handle initialization and
+	//   cleanup of the node
+	ros::NodeHandle n;
 
-  // Set up the publisher rate to 10 Hz
-  ros::Rate loop_rate(10);
+	// Set up the publisher rate to 10 Hz
+	ros::Rate loop_rate(10);
 
-  while (ros::ok()) {
-    // "Spin" a callback in case we set up any callbacks
-    ros::spinOnce();
+	while (ros::ok()) {
 
-    // Sleep for the remaining time until we hit our 10 Hz rate
-    loop_rate.sleep();
-  }
+		ROS_INFO_STREAM("Vehicle node running...");
 
-  return 0;
+		// "Spin" a callback in case we set up any callbacks
+		ros::spinOnce();
+
+		// Sleep for the remaining time until we hit our 10 Hz rate
+		loop_rate.sleep();
+	}
+
+	return 0;
 }

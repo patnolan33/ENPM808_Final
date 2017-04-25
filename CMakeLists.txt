@@ -20,9 +20,12 @@ add_executable(vehicle src/main.cpp src/vehicle.cpp src/camera.cpp src/motionCon
 target_link_libraries(vehicle ${catkin_LIBRARIES} ${OCTOMAP_LIBRARIES})
 
 
-## Add gtest based cpp test target and link libraries
-catkin_add_gtest(
-	enpm808_finalTest 
+## TESTING
+if(CATKIN_ENABLE_TESTING)
+  find_package(rostest REQUIRED)
+
+  add_rostest_gtest(
+  	enpm808_finalTest
 	test/enpm808_finalTest.launch 
 	test/main.cpp 
 	test/vehicleTest.cpp 
@@ -33,17 +36,15 @@ catkin_add_gtest(
 	src/camera.cpp
 	src/motionController.cpp
 	src/obstacleDetection.cpp
-)
-
-if(TARGET enpm808_finalTest)
-  target_link_libraries(enpm808_finalTest ${catkin_LIBRARIES} ${OCTOMAP_LIBRARIES})
-    
+  )
+  target_link_libraries(
+	enpm808_finalTest
+	${catkin_LIBRARIES}
+	${OCTOMAP_LIBRARIES}
+  )
   add_dependencies(
 	  enpm808_finalTest
 	  vehicle
 	  ${catkin_EXPORTED_TARGETS}
   )
 endif()
-
-## Add folders to be run by python nosetests
-catkin_add_nosetests(test)
