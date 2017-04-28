@@ -41,20 +41,71 @@
  *  @copyright BSD
  */
 
+#include <sstream>
 #include <string>
 #include <stdlib.h>
 #include <ros/ros.h>
 #include <camera.hpp>
+#include <cv_bridge/cv_bridge.h>
+#include <sensor_msgs/image_encodings.h>
+#include <opencv2/imgproc/imgproc.hpp>
+#include <opencv2/core/core.hpp>
+#include <opencv2/highgui/highgui.hpp>
+#include <image_transport/image_transport.h>
 
 /**
  * @brief Camera constructor
  */
-Camera::Camera() {
+Camera::Camera() :
+		takeImageFlag(false) {
+
+	// Register client to "textService" service
+	cameraClient = nh.serviceClient < enpm808_final::takeImageService > ("takeImage");
+}
+
+/**
+ * @brief Camera topic callback takes a picture if flag has been set
+ */
+void Camera::cameraCallback(const sensor_msgs::ImageConstPtr& msg) {
+	if (takeImageFlag) {
+		ROS_INFO_STREAM("Camera...");
+
+		cv_bridge::CvImagePtr cv_ptr;
+		try {
+			cv_ptr = cv_bridge::toCvCopy(msg, "bgr8");
+		} catch (cv_bridge::Exception& e) {
+			ROS_ERROR("cv_bridge exception: %s", e.what());
+			return;
+		}
+
+		// Save OpenCV Image to file:
+		cv::namedWindow("Image window");
+		cv::imshow("Image window", cv_ptr->image);
+		int count = savedImages.size() + 1;
+		std::ostringstream filename;
+		filename << "turtleBotImage_" << count << ".jpg";
+		cv::imwrite(filename.str(), cv_ptr->image);
+
+		// Add filename to list of saved images:
+		savedImages.push_back(filename.str());
+
+		// Reset Flag:
+		takeImageFlag = false;
+	}
 }
 
 /**
  * @brief Take an image of the current RGB camera view for later analysis
  */
-std::string Camera::takeImage() {
-	return "";
+bool Camera::takeImage(enpm808_final::takeImageService::Request &req,
+		enpm808_final::takeImageService::Response &resp) {
+//	bool flag = req.flag;
+	resp.resp = true;
+
+	ROS_INFO_STREAM("Set flag to [true]");
+	ROS_INFO("Response for client: %s", resp.resp ? "true" : "false");
+
+	takeImageFlag = resp.resp;
+
+	return true;
 }

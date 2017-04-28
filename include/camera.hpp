@@ -45,35 +45,53 @@
 #include <vector>
 #include <stdlib.h>
 #include <ros/ros.h>
+#include <sensor_msgs/Image.h>
+#include <enpm808_final/takeImageService.h>
 
 /**
  * @brief Camera class handles viewing onboard imagery and taking images
  */
 class Camera {
- public:
-  /**
-   * @brief Camera constructor
-   */
-  Camera();
+public:
+	/**
+	 * @brief Camera constructor
+	 */
+	Camera();
 
-  /**
-   * @brief Take an image of the current RGB camera view for later analysis
-   */
-  std::string takeImage();
+	/**
+	 * @brief Take an image of the current RGB camera view for later analysis
+	 */
+	bool takeImage(enpm808_final::takeImageService::Request &req,
+			enpm808_final::takeImageService::Response &resp);
 
- private:
-  /**
-   * @brief container for the filenames of each saved image
-   */
-  std::vector<std::string> savedImages;
+	/**
+	 * @brief Camera topic callback takes a picture if flag has been set
+	 */
+	void cameraCallback(const sensor_msgs::ImageConstPtr& msg);
 
-  /**
-   * @brief container for a ROS node handler
-   */
-  ros::NodeHandle nh;
+	std::vector<std::string> getSavedImageFilenames() {
+		return savedImages;
+	}
+	;
 
-  /**
-   * @brief container for a ROS subscriber for camera topics
-   */
-  ros::Subscriber cameraSub;
+private:
+	/**
+	 * @brief container for the filenames of each saved image
+	 */
+	std::vector<std::string> savedImages;
+
+	/**
+	 * @brief Flag denoting whether or not to take an image on next receipt of camera topic
+	 */
+	bool takeImageFlag;
+
+	/**
+	 * @brief Container for takeImage service
+	 */
+	ros::ServiceClient cameraClient;
+
+	/**
+	 * @brief Node handler for subscribing to service and topics
+	 */
+	ros::NodeHandle nh;
 };
