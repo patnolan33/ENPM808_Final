@@ -68,10 +68,22 @@ $ catkin_make
 You should now see a enpm808_final directory in `catkin_ws/build`. 
 
 ## <a name="run-steps"></a> Run steps
-This step assumes that a roscore is running. If one is not running, open a new terminal and run `roscore`. To run the package, open a new terminal, change directories into your catkin workspace, run the vehicle ROS node:
+To run the package, open a new terminal, change directories into your catkin workspace, and source your directory. Then, run the launch file using roslaunch:
 ```
 $ cd <PATH_TO_YOUR_DIRECTORY>/catkin_ws
-$ rosrun enpm808_final vehicle
+$ source devel/setup.bash
+$ roslaunch enpm808_final enpm808_final.launch
+```
+You should see several windows open. You will see a terminal window open that runs the vehicle node, printing messages denoting laser scans are seen. This is also the window where we will see the vehicle node respond to any take image service calls (see [Take an image using rosservice](#take_image_service)). Another window that will appear is the Gazebo simulator window where a simulated turtlebot vehicle will be placed within a demo world (pictured below, left). The final window that will open is an image viewer window. This window shows the current RGB camera feed from onboard the turtlebot robot. As the vehicle moves around, you can watch this window to see if there are any interesting features in the world -- if so, take an image using a ROS service call. An example of this view is shown below on the right. 
+
+![gazebo example](./results/gazeboExample.png?raw=true "Gazebo Example")
+
+## <a name="take_image_service"></a> Take an image using rosservice
+When the vehicle is moving, you may see something that you wish to take a picture of in your image view window. To do so, you can issue a `rosservice` call to the vehicle. The vehicle will see this service and change the `takeImage` flag so that next time it sees the `/camera/rgb/image_raw` topic, it will take and save an image. To make this service call, open a new terminal, change directories to your workspace, source the directory, and call rosservice: 
+```
+$ cd <PATH_TO_YOUR_DIRECTORY>/catkin_ws
+$ source devel/setup.bash
+$ rosservice call /takeImageService true
 ```
 
 ## <a name="testing"></a> Testing
