@@ -91,3 +91,4 @@ You should see a summary of the number of tests passed/failed output on the scre
   - "Stop motion" command
   - "Resume motion" command
   - "Take image" command
+- Output saved images and bag files to specified directory

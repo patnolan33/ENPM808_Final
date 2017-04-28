@@ -58,7 +58,7 @@ TEST(TestSuite, determine_action) {
   tmpMsg.angular.y = 0.0;
   tmpMsg.angular.z = 0.0;
 
-  geometry_msgs::Twist msg = motionController->determineAction();
+  geometry_msgs::Twist msg = motionController->getVehicleAction();
   bool isEqual = false;
   if(tmpMsg.linear.x == msg.linear.x && tmpMsg.linear.y == msg.linear.y && tmpMsg.linear.z == msg.linear.z &&
       tmpMsg.angular.x == msg.angular.x && tmpMsg.angular.y == msg.angular.y && tmpMsg.linear.z == msg.angular.z) {

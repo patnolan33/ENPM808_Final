@@ -58,6 +58,6 @@ ObstacleDetection::ObstacleDetection(double threshold)
 /**
  * @brief detect if the vehicle is about to collide with an obstacle or not
  */
-bool ObstacleDetection::detectObstacle() {
+bool ObstacleDetection::detectObstacle(const sensor_msgs::LaserScan::ConstPtr& msg) {
   return true;
 }

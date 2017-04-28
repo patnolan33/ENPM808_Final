@@ -43,19 +43,32 @@
 
 #include <stdlib.h>
 #include <ros/ros.h>
-#include "vehicle.hpp"
+#include <vehicle.hpp>
+#include <enpm808_final/takeImageService.h>
 
 /**
  * @brief Vehicle constructor
  */
 Vehicle::Vehicle() {
-  motionController = new MotionController(1.0);
+	motionController = new MotionController(1.0);
+	camera = new Camera();
+
+	// Set up subscribers
+	cameraSub = nh.subscribe < sensor_msgs::Image
+			> ("/camera/rgb/image_raw", 500, &Camera::cameraCallback, camera);
+
+	laserSub = nh.subscribe < sensor_msgs::LaserScan
+			> ("/scan", 500, &MotionController::determineAction, motionController);
+
+	// Register service with the master
+	server = nh.advertiseService("takeImageService", &Camera::takeImage,
+			camera);
 }
 
 /**
  * @brief drive the vehicle autonomously using laser scan data as sensor feedback
  */
 void Vehicle::drive() {
-  return;
+//	ROS_INFO_STREAM("Vehicle node running...");
 }
 

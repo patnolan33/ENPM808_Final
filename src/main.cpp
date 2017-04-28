@@ -43,6 +43,7 @@
 
 #include <stdlib.h>
 #include <ros/ros.h>
+#include <vehicle.hpp>
 
 int main(int argc, char **argv) {
 	// Initialize ROS and name our node "enpm808_final"
@@ -55,9 +56,12 @@ int main(int argc, char **argv) {
 	// Set up the publisher rate to 10 Hz
 	ros::Rate loop_rate(10);
 
+	// Vehicle container
+	Vehicle *vehicle = new Vehicle();
+
 	while (ros::ok()) {
 
-		ROS_INFO_STREAM("Vehicle node running...");
+		vehicle->drive();
 
 		// "Spin" a callback in case we set up any callbacks
 		ros::spinOnce();

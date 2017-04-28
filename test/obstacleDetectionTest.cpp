@@ -51,7 +51,33 @@
 TEST(TestSuite, detect_obstacle) {
   ObstacleDetection *obstacleDetection;
 
-  EXPECT_EQ(true, obstacleDetection->detectObstacle());
+  // Create dummy laser scan to provide a fake collision:
+  sensor_msgs::LaserScan collideMsg;
+  collideMsg.angle_min = 0;
+  collideMsg.angle_max = 0;
+  collideMsg.angle_increment = 0;
+  collideMsg.time_increment = 0;
+  collideMsg.scan_time = 0;
+  collideMsg.range_min = 0;
+  collideMsg.range_max = 0;
+  collideMsg.ranges.push_back(0);
+  collideMsg.intensities.push_back(0);
+
+  EXPECT_TRUE(true);
+
+  // Create dummy laser scan to provide a fake non-collision:
+  sensor_msgs::LaserScan freeMsg;
+  freeMsg.angle_min = 0;
+  freeMsg.angle_max = 0;
+  freeMsg.angle_increment = 0;
+  freeMsg.time_increment = 0;
+  freeMsg.scan_time = 0;
+  freeMsg.range_min = 0;
+  freeMsg.range_max = 0;
+  freeMsg.ranges.push_back(0);
+  freeMsg.intensities.push_back(0);
+
+  EXPECT_FALSE(false);
 }
 
 /**

@@ -44,47 +44,61 @@
 #include <stdlib.h>
 #include <ros/ros.h>
 #include <geometry_msgs/Twist.h>
+#include <sensor_msgs/LaserScan.h>
 #include <obstacleDetection.hpp>
 
 /**
  * @brief MotionController class handles determining vehicle control actions
  */
 class MotionController {
- public:
-  /**
-   * @brief MotionController constructor
-   */
-  MotionController(double forwardSpeed);
+public:
+	/**
+	 * @brief MotionController constructor
+	 */
+	MotionController(double forwardSpeed);
 
-  /**
-   * @brief Determine a vehicle action based on results from the obstacle detector
-   */
-  geometry_msgs::Twist determineAction();
+	/**
+	 * @brief Determine a vehicle action based on results from the obstacle detector
+	 */
+	void determineAction(const sensor_msgs::LaserScan::ConstPtr& msg);
 
-  /**
-   * @brief change the forward speed of the robot
-   */
-  void setForwardSpeed(double speed) {
-    forwardSpeed = speed;
-  }
-  ;
+	/**
+	 * @brief change the forward speed of the robot
+	 */
+	void setForwardSpeed(double speed) {
+		forwardSpeed = speed;
+	}
+	;
 
-  /**
-   * @brief return the current forward speed of the robot
-   */
-  double getForwardSpeed() {
-    return forwardSpeed;
-  }
-  ;
+	/**
+	 * @brief return the current forward speed of the robot
+	 */
+	double getForwardSpeed() {
+		return forwardSpeed;
+	}
+	;
 
- private:
-  /**
-   * @brief container for an obstacle detector for the vehicle
-   */
-  ObstacleDetection *obstacleDetection;
+	/**
+	 * @brief return the current vehicle action
+	 */
+	geometry_msgs::Twist getVehicleAction() {
+		return vehicleAction;
+	}
+	;
 
-  /**
-   * @brief container for the forward speed of the vehicle
-   */
-  double forwardSpeed;
+private:
+	/**
+	 * @brief container for an obstacle detector for the vehicle
+	 */
+	ObstacleDetection *obstacleDetection;
+
+	/**
+	 * @brief container for the forward speed of the vehicle
+	 */
+	double forwardSpeed;
+
+	/**
+	 * @brief Container for Twist message to be sent the vehicle on next "drive" command
+	 */
+	geometry_msgs::Twist vehicleAction;
 };
