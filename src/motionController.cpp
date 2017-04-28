@@ -53,7 +53,7 @@ MotionController::MotionController(double forwardSpeed) :
 		forwardSpeed(forwardSpeed) {
 	obstacleDetection = new ObstacleDetection(1.0);
 
-	// Intialize vehicle action to stay still:
+	// Initialize vehicle action to stay still:
 	vehicleAction.linear.x = 0.0;
 	vehicleAction.linear.y = 0.0;
 	vehicleAction.linear.z = 0.0;
@@ -75,9 +75,18 @@ void MotionController::determineAction(
 	action.angular.y = 0.0;
 	action.angular.z = 0.0;
 
+
 	if (obstacleDetection->detectObstacle(msg)) {
-		ROS_INFO_STREAM("Laser scan data received...");
+		ROS_INFO_STREAM("Obstacle detected. Stop and turn until we are free.");
+		// Set linear velocity to zero
+		action.linear.x = 0.0;
+		// Set turn rate about the z-axis
+		action.angular.z = 1.0;
 	} else {
+		// Set turn rate to zero
+		action.angular.z = 0.0;
+		// Move forward slowly
+		action.linear.x = 0.1;
 	}
 
 	// Set vehicle action:

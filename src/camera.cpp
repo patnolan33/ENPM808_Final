@@ -59,7 +59,7 @@
 Camera::Camera() :
 		takeImageFlag(false) {
 
-	// Register client to "textService" service
+	// Register client to "takeImage" service
 	cameraClient = nh.serviceClient < enpm808_final::takeImageService > ("takeImage");
 }
 

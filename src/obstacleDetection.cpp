@@ -50,14 +50,25 @@
 /**
  * @brief ObstacleDetection constructor
  */
-ObstacleDetection::ObstacleDetection(double threshold)
-    : distanceThreshold(threshold) {
-  worldModel = new octomap::OcTree(0.1);
+ObstacleDetection::ObstacleDetection(double threshold) :
+		distanceThreshold(threshold) {
+	worldModel = new octomap::OcTree(0.1);
 }
 
 /**
  * @brief detect if the vehicle is about to collide with an obstacle or not
  */
-bool ObstacleDetection::detectObstacle(const sensor_msgs::LaserScan::ConstPtr& msg) {
-  return true;
+bool ObstacleDetection::detectObstacle(
+		const sensor_msgs::LaserScan::ConstPtr& msg) {
+
+	// Check if any scan from the laser is less than 0.75 meters
+	//  from the front of the robot. If so, a collision is about to occur
+	for (int i = 0; i < msg->ranges.size(); ++i) {
+		if (msg->ranges[i] < distanceThreshold) {
+			return true;
+		}
+	}
+
+	// Return false if we are collision free
+	return false;
 }
