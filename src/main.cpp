@@ -61,6 +61,7 @@ int main(int argc, char **argv) {
 
 	while (ros::ok()) {
 
+		// While we are running, drive the vehicle autonomously
 		vehicle->drive();
 
 		// "Spin" a callback in case we set up any callbacks

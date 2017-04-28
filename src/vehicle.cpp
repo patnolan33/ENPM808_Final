@@ -43,6 +43,7 @@
 
 #include <stdlib.h>
 #include <ros/ros.h>
+#include <geometry_msgs/Twist.h>
 #include <vehicle.hpp>
 #include <enpm808_final/takeImageService.h>
 
@@ -57,18 +58,27 @@ Vehicle::Vehicle() {
 	cameraSub = nh.subscribe < sensor_msgs::Image
 			> ("/camera/rgb/image_raw", 500, &Camera::cameraCallback, camera);
 
-	laserSub = nh.subscribe < sensor_msgs::LaserScan
-			> ("/scan", 500, &MotionController::determineAction, motionController);
+	laserSub =
+			nh.subscribe < sensor_msgs::LaserScan
+					> ("/scan", 500, &MotionController::determineAction, motionController);
 
 	// Register service with the master
 	server = nh.advertiseService("takeImageService", &Camera::takeImage,
 			camera);
+
+	// Set up publisher:
+	drivePub = nh.advertise < geometry_msgs::Twist
+			> ("/mobile_base/commands/velocity", 1000);
 }
 
 /**
  * @brief drive the vehicle autonomously using laser scan data as sensor feedback
  */
 void Vehicle::drive() {
-//	ROS_INFO_STREAM("Vehicle node running...");
+	// Grab current vehicle action:
+	geometry_msgs::Twist vehicleCommand = motionController->getVehicleAction();
+
+	// Publish command:
+	drivePub.publish(vehicleCommand);
 }
 
