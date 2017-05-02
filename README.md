@@ -78,6 +78,8 @@ You should see several windows open. You will see a terminal window open that ru
 
 ![gazebo example](./results/gazeboExample.png?raw=true "Gazebo Example")
 
+When the gazebo world is loaded, the turtlebot will start to drive forward. It will drive forward until it encounters an obstacle, at which point it will stop, turn in place until it sees no obstacle, and then continue to drive forward. This is maybe considered a "dumb" way to navigate, but in the desired use cases, the area may be completely unknown and the robot's task is to collect as much information as it can about its surrounding environment. 
+
 ## <a name="take_image_service"></a> Take an image using rosservice
 When the vehicle is moving, you may see something that you wish to take a picture of in your image view window. To do so, you can issue a `rosservice` call to the vehicle. The vehicle will see this service and change the `takeImage` flag so that next time it sees the `/camera/rgb/image_raw` topic, it will take and save an image. To make this service call, open a new terminal, change directories to your workspace, source the directory, and call rosservice: 
 ```
@@ -95,12 +97,7 @@ $ catkin_make run_tests && catkin_test_results
 You should see a summary of the number of tests passed/failed output on the screen. 
 
 ## <a name="todo"></a> TODO
-- Implement `Camera` class
-- Implement `ObstacleDetection` class
-- Implement `MotionController` class
-- Implement `Vehicle` class
 - Implement services:
   - "Stop motion" command
   - "Resume motion" command
-  - "Take image" command
 - Output saved images and bag files to specified directory
