@@ -50,50 +50,60 @@
  * @brief Vehicle class handles the camera and motion controller interactions for turtlebot
  */
 class Vehicle {
- public:
-  /**
-   * @brief Vehicle constructor
-   */
-  Vehicle();
+public:
+	/**
+	 * @brief Vehicle constructor
+	 */
+	Vehicle();
 
-  /**
-   * @brief drive the vehicle autonomously using laser scan data as sensor feedback
-   */
-  void drive();
+	/**
+	 * @brief drive the vehicle autonomously using laser scan data as sensor feedback
+	 */
+	void drive();
 
- private:
-  /**
-   * @brief container for the camera object
-   */
-  Camera *camera;
+	int getPublishedMessagesCount() {
+		return publishedMessagesCount;
+	}
+	;
 
-  /**
-   * @brief container for the motion controller object
-   */
-  MotionController *motionController;
+private:
+	/**
+	 * @brief container for the camera object
+	 */
+	Camera *camera;
 
-  /**
-   * @brief container for a ROS publisher to publish vehicle motion commands
-   */
-  ros::Publisher drivePub;
+	/**
+	 * @brief container for the motion controller object
+	 */
+	MotionController *motionController;
 
-  /**
-   * @brief container for a ROS node handler
-   */
-  ros::NodeHandle nh;
+	/**
+	 * @brief container for a ROS publisher to publish vehicle motion commands
+	 */
+	ros::Publisher drivePub;
 
-  /**
-   * @brief container for a ROS subscriber for camera topics
-   */
-  ros::Subscriber cameraSub;
+	/**
+	 * @brief container for a ROS node handler
+	 */
+	ros::NodeHandle nh;
 
-  /**
-   * @brief container for a ROS subscriber for laser scan topics
-   */
-  ros::Subscriber laserSub;
+	/**
+	 * @brief container for a ROS subscriber for camera topics
+	 */
+	ros::Subscriber cameraSub;
 
-  /**
-   * @brief Container for service server (for takeImage service)
-   */
-  ros::ServiceServer server;
+	/**
+	 * @brief container for a ROS subscriber for laser scan topics
+	 */
+	ros::Subscriber laserSub;
+
+	/**
+	 * @brief Container for service server (for takeImage service)
+	 */
+	ros::ServiceServer server;
+
+	/**
+	 * @brief Container for a counter of how many messages have been published
+	 */
+	int publishedMessagesCount;
 };

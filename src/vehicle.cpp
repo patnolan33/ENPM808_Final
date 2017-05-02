@@ -50,7 +50,8 @@
 /**
  * @brief Vehicle constructor
  */
-Vehicle::Vehicle() {
+Vehicle::Vehicle() :
+		publishedMessagesCount(0) {
 	motionController = new MotionController(1.0);
 	camera = new Camera();
 
@@ -80,5 +81,8 @@ void Vehicle::drive() {
 
 	// Publish command:
 	drivePub.publish(vehicleCommand);
+
+	// Increment published message counter:
+	publishedMessagesCount++;
 }
 

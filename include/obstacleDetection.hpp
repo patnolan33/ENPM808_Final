@@ -60,7 +60,7 @@ public:
 	/**
 	 * @brief Callback function for the laser scan. Detects if the vehicle is about to collide with an obstacle or not
 	 */
-	bool detectObstacle(const sensor_msgs::LaserScan::ConstPtr& msg);
+	bool detectObstacle(const sensor_msgs::LaserScan msg);
 
 	/**
 	 * @brief return the current threshold for how close the vehicle should get to an object

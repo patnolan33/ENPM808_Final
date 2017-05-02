@@ -49,7 +49,7 @@
  * @brief Test the ability for the obstacle detector to properly detect an obstacle
  */
 TEST(TestSuite, detect_obstacle) {
-  ObstacleDetection *obstacleDetection;
+  ObstacleDetection *obstacleDetection = new ObstacleDetection(1.0);
 
   // Create dummy laser scan to provide a fake collision:
   sensor_msgs::LaserScan collideMsg;
@@ -60,10 +60,11 @@ TEST(TestSuite, detect_obstacle) {
   collideMsg.scan_time = 0;
   collideMsg.range_min = 0;
   collideMsg.range_max = 0;
-  collideMsg.ranges.push_back(0);
+  collideMsg.ranges.push_back(0.0);
   collideMsg.intensities.push_back(0);
 
-  EXPECT_TRUE(true);
+
+  EXPECT_TRUE(obstacleDetection->detectObstacle(collideMsg));
 
   // Create dummy laser scan to provide a fake non-collision:
   sensor_msgs::LaserScan freeMsg;
@@ -74,10 +75,10 @@ TEST(TestSuite, detect_obstacle) {
   freeMsg.scan_time = 0;
   freeMsg.range_min = 0;
   freeMsg.range_max = 0;
-  freeMsg.ranges.push_back(0);
+  freeMsg.ranges.push_back(2.0);
   freeMsg.intensities.push_back(0);
 
-  EXPECT_FALSE(false);
+  EXPECT_FALSE(obstacleDetection->detectObstacle(freeMsg));
 }
 
 /**

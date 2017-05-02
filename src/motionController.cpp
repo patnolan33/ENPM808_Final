@@ -76,7 +76,7 @@ void MotionController::determineAction(
 	action.angular.z = 0.0;
 
 
-	if (obstacleDetection->detectObstacle(msg)) {
+	if (obstacleDetection->detectObstacle(*msg)) {
 		ROS_INFO_STREAM("Obstacle detected. Stop and turn until we are free.");
 		// Set linear velocity to zero
 		action.linear.x = 0.0;
