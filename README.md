@@ -87,6 +87,7 @@ $ cd <PATH_TO_YOUR_DIRECTORY>/catkin_ws
 $ source devel/setup.bash
 $ rosservice call /takeImageService true
 ```
+Note that if the image window seems to freeze even though the turlebot is moving, this is likely due to a performance bottleneck in the VM. Simply closing the image_view window will cause a new one to open as soon as a new /camera topic is received, and this will "reset" the camera view. You shuold see the view changing according to what the turtlebot is currently seeing.
 
 ## <a name="testing"></a> Testing
 Unit tests have been written for this repository. To run the tests, open a new terminal and change directories to your catkin workspace. Then, run the tests using catkin and the test launch file:
@@ -101,3 +102,4 @@ You should see a summary of the number of tests passed/failed output on the scre
   - "Stop motion" command
   - "Resume motion" command
 - Output saved images and bag files to specified directory
+- Document workaround for "stopping in place"--had to send a non-zero, very small angular rate

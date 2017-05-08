@@ -46,6 +46,7 @@
 #include <stdlib.h>
 #include <ros/ros.h>
 #include <sensor_msgs/LaserScan.h>
+#include <enpm808_final/changeThresholdService.h>
 
 /**
  * @brief ObstacleDetection class handles determining if the vehicle is going to collide using laser scans

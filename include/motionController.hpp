@@ -46,6 +46,8 @@
 #include <geometry_msgs/Twist.h>
 #include <sensor_msgs/LaserScan.h>
 #include <obstacleDetection.hpp>
+#include <enpm808_final/changeSpeedService.h>
+#include <enpm808_final/togglePauseMotion.h>
 
 /**
  * @brief MotionController class handles determining vehicle control actions
@@ -61,6 +63,24 @@ public:
 	 * @brief Determine a vehicle action based on results from the obstacle detector
 	 */
 	void determineAction(const sensor_msgs::LaserScan::ConstPtr& msg);
+
+	/**
+	 * @brief Response to the change speed service to set forward speed
+	 */
+	bool changeSpeed(enpm808_final::changeSpeedService::Request &req,
+			enpm808_final::changeSpeedService::Response &resp);
+
+	/**
+	 * @brief Response to the change threshold service to set distance threshold
+	 */
+	bool changeThreshold(enpm808_final::changeThresholdService::Request &req,
+			enpm808_final::changeThresholdService::Response &resp);
+
+	/**
+	 * @brief Response to the toggle pause motion service
+	 */
+	bool togglePause(enpm808_final::togglePauseMotion::Request &req,
+			enpm808_final::togglePauseMotion::Response &resp);
 
 	/**
 	 * @brief change the forward speed of the robot
@@ -101,4 +121,19 @@ private:
 	 * @brief Container for Twist message to be sent the vehicle on next "drive" command
 	 */
 	geometry_msgs::Twist vehicleAction;
+
+	/**
+	 * @brief Flag to denote if we should pause the robot or continue motion
+	 */
+	bool pauseMotion;
+
+	/**
+	 * @brief Flag to denote that we have entered a "collision" state and are turning
+	 */
+	bool obstaclePresent;
+
+	/**
+	 * @brief Counter for how long we have been spinning trying to find a free space
+	 */
+	int obstacleCounter;
 };

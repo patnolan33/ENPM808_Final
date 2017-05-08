@@ -52,7 +52,7 @@
  */
 Vehicle::Vehicle() :
 		publishedMessagesCount(0) {
-	motionController = new MotionController(1.0);
+	motionController = new MotionController(0.25);
 	camera = new Camera();
 
 	// Set up subscribers
@@ -63,9 +63,15 @@ Vehicle::Vehicle() :
 			nh.subscribe < sensor_msgs::LaserScan
 					> ("/scan", 500, &MotionController::determineAction, motionController);
 
-	// Register service with the master
-	server = nh.advertiseService("takeImageService", &Camera::takeImage,
+	// Register services with the master
+	takeImageServer = nh.advertiseService("takeImageService", &Camera::takeImage,
 			camera);
+	changeThresholdServer = nh.advertiseService("changeThresholdService",
+			&MotionController::changeThreshold, motionController);
+	changeSpeedServer = nh.advertiseService("changeSpeedService",
+			&MotionController::changeSpeed, motionController);
+	togglePauseServer = nh.advertiseService("togglePauseMotionService",
+			&MotionController::togglePause, motionController);
 
 	// Set up publisher:
 	drivePub = nh.advertise < geometry_msgs::Twist

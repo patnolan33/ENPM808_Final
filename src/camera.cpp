@@ -60,7 +60,8 @@ Camera::Camera() :
 		takeImageFlag(false) {
 
 	// Register client to "takeImage" service
-	cameraClient = nh.serviceClient < enpm808_final::takeImageService > ("takeImage");
+	cameraClient = nh.serviceClient < enpm808_final::takeImageService
+			> ("takeImage");
 }
 
 /**
@@ -68,8 +69,6 @@ Camera::Camera() :
  */
 void Camera::cameraCallback(const sensor_msgs::ImageConstPtr& msg) {
 	if (takeImageFlag) {
-		ROS_INFO_STREAM("Camera...");
-
 		cv_bridge::CvImagePtr cv_ptr;
 		try {
 			cv_ptr = cv_bridge::toCvCopy(msg, "bgr8");
@@ -86,6 +85,8 @@ void Camera::cameraCallback(const sensor_msgs::ImageConstPtr& msg) {
 		filename << "turtleBotImage_" << count << ".jpg";
 		cv::imwrite(filename.str(), cv_ptr->image);
 
+		ROS_INFO("Saving image %s to ~/.ros/", filename.str().c_str());
+
 		// Add filename to list of saved images:
 		savedImages.push_back(filename.str());
 
@@ -95,15 +96,14 @@ void Camera::cameraCallback(const sensor_msgs::ImageConstPtr& msg) {
 }
 
 /**
- * @brief Take an image of the current RGB camera view for later analysis
+ * @brief Set the image flag so that the next time a camera topic is seen, we take a picture
  */
 bool Camera::takeImage(enpm808_final::takeImageService::Request &req,
 		enpm808_final::takeImageService::Response &resp) {
 //	bool flag = req.flag;
 	resp.resp = true;
 
-	ROS_INFO_STREAM("Set flag to [true]");
-	ROS_INFO("Response for client: %s", resp.resp ? "true" : "false");
+	ROS_INFO_STREAM("Set flag to [true], save the next available image frame.");
 
 	takeImageFlag = resp.resp;
 

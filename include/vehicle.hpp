@@ -100,7 +100,22 @@ private:
 	/**
 	 * @brief Container for service server (for takeImage service)
 	 */
-	ros::ServiceServer server;
+	ros::ServiceServer takeImageServer;
+
+	/**
+	 * @brief Container for service server (for changeSpeed service)
+	 */
+	ros::ServiceServer changeSpeedServer;
+
+	/**
+	 * @brief Container for service server (for changeThreshold service)
+	 */
+	ros::ServiceServer changeThresholdServer;
+
+	/**
+	 * @brief Container for service server (for togglePause service)
+	 */
+	ros::ServiceServer togglePauseServer;
 
 	/**
 	 * @brief Container for a counter of how many messages have been published

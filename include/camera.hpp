@@ -59,7 +59,7 @@ public:
 	Camera();
 
 	/**
-	 * @brief Take an image of the current RGB camera view for later analysis
+	 * @brief Set the image flag so that the next time a camera topic is seen, we take a picture
 	 */
 	bool takeImage(enpm808_final::takeImageService::Request &req,
 			enpm808_final::takeImageService::Response &resp);

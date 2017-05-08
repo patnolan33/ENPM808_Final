@@ -50,7 +50,8 @@
  * @brief MotionController constructor
  */
 MotionController::MotionController(double forwardSpeed) :
-		forwardSpeed(forwardSpeed) {
+		forwardSpeed(forwardSpeed), pauseMotion(false), obstaclePresent(false), obstacleCounter(
+				0) {
 	obstacleDetection = new ObstacleDetection(1.0);
 
 	// Initialize vehicle action to stay still:
@@ -73,22 +74,95 @@ void MotionController::determineAction(
 	action.linear.z = 0.0;
 	action.angular.x = 0.0;
 	action.angular.y = 0.0;
-	action.angular.z = 0.0;
+	action.angular.z = 0.00000001; // Note: The "stop motion" command wouldn't work
+								   //  with a zero velocity, so a very small angular
+								   // velocity is set to appear to stop in place
 
+	// If we are not pausing the motion, set either forward speed or angular speed
+	if (pauseMotion == false) {
+		if (obstacleDetection->detectObstacle(*msg)) {
+			// If this is the first time we've entered a collision state, warn the operator
+			if (obstaclePresent == false) {
+				ROS_WARN(
+						"Obstacle detected <%f m away. Stop and turn until we are free.",
+						obstacleDetection->getDistanceThreshold());
+			}
 
-	if (obstacleDetection->detectObstacle(*msg)) {
-		ROS_INFO_STREAM("Obstacle detected. Stop and turn until we are free.");
-		// Set linear velocity to zero
-		action.linear.x = 0.0;
-		// Set turn rate about the z-axis
-		action.angular.z = 1.0;
-	} else {
-		// Set turn rate to zero
-		action.angular.z = 0.0;
-		// Move forward slowly
-		action.linear.x = 0.1;
+			// Set linear velocity to zero
+			action.linear.x = 0.0;
+			// Set turn rate about the z-axis
+			action.angular.z = 1.0;
+
+			// Set flag for obstacle present:
+			obstaclePresent = true;
+
+			// Increment the counter
+			obstacleCounter++;
+			// If we've been searching for a while, warn the operator that we may be stuck
+			if (obstacleCounter > 1000) {
+				ROS_WARN_STREAM(
+						"Vehicle may be stuck. Manual intervention may be required to continue.");
+			}
+		} else {
+			// Set turn rate to zero
+			action.angular.z = 0.0;
+			// Move forward slowly
+			action.linear.x = forwardSpeed;
+
+			// Set flag for obstacle present:
+			obstaclePresent = false;
+		}
 	}
 
 	// Set vehicle action:
 	vehicleAction = action;
+}
+
+/**
+ * @brief Response to the change speed service to set forward speed
+ */
+bool MotionController::changeSpeed(
+		enpm808_final::changeSpeedService::Request &req,
+		enpm808_final::changeSpeedService::Response &resp) {
+	// Set forward speed to desired speed:
+	setForwardSpeed(req.speed);
+	resp.resp = true;
+
+	ROS_INFO("Set forward speed to: %f", req.speed);
+
+	return resp.resp;
+}
+
+/**
+ * @brief Response to the change threshold service to set distance threshold
+ */
+bool MotionController::changeThreshold(
+		enpm808_final::changeThresholdService::Request &req,
+		enpm808_final::changeThresholdService::Response &resp) {
+	// Set distance threshold to desired threshold:
+	obstacleDetection->setDistanceThreshold(req.threshold);
+	resp.resp = true;
+
+	ROS_INFO("Set detection threshold: %f", req.threshold);
+
+	return resp.resp;
+}
+
+/**
+ * @brief Response to the toggle pause motion service
+ */
+bool MotionController::togglePause(
+		enpm808_final::togglePauseMotion::Request &req,
+		enpm808_final::togglePauseMotion::Response &resp) {
+	// Toggle pause motion flag:
+	pauseMotion = req.pause;
+	resp.resp = true;
+
+	if (pauseMotion) {
+		ROS_INFO_STREAM("Pause vehicle motion.");
+	} else {
+		ROS_INFO_STREAM("Continue vehicle motion.");
+	}
+
+	return resp.resp;
 }

@@ -2,7 +2,7 @@
     <arg name="record" default="false"/>
 
     <include file="$(find turtlebot_gazebo)/launch/turtlebot_world.launch">
-        <arg name="world_file" value="$(find enpm808_final)/gazebo_world/turtlebot_walker_demo"/>
+        <arg name="world_file" value="$(find enpm808_final)/gazebo_world/turtlebot_walker_demo_2"/>
     </include>
     
     <node

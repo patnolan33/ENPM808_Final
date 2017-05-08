@@ -58,8 +58,7 @@ ObstacleDetection::ObstacleDetection(double threshold) :
 /**
  * @brief detect if the vehicle is about to collide with an obstacle or not
  */
-bool ObstacleDetection::detectObstacle(
-		const sensor_msgs::LaserScan msg) {
+bool ObstacleDetection::detectObstacle(const sensor_msgs::LaserScan msg) {
 
 	// Check if any scan from the laser is less than 0.75 meters
 	//  from the front of the robot. If so, a collision is about to occur

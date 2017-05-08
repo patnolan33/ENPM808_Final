@@ -14,7 +14,13 @@ find_package(catkin REQUIRED COMPONENTS
 )
 
 ## Generate added messages and services
-add_service_files(FILES takeImageService.srv)
+add_service_files(
+	FILES 
+	takeImageService.srv 
+	changeThresholdService.srv
+	changeSpeedService.srv
+	togglePauseMotion.srv
+)
 generate_messages(DEPENDENCIES std_msgs)
 
 ## Declare a catkin package
