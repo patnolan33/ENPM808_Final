@@ -8,7 +8,15 @@
 - [SIP Process](#sip_process)
 - [Build Steps](#build-steps)
 - [Run Steps](#run-steps)
+  - [Gazebo](#roslaunch-gazebo)
+  - [RViz](#roslaunch-rviz)
+- [Interacting with the vehicle (rosservice)](#vehicle-interaction)
+  - [Take an image](#take-image-service)
+  - [Change forward speed](#change-speed-service)
+  - [Change obstacle detection threshold](#change-threshold-service)
+  - [Pause / Resume vehicle motion](#pause-motion-service)
 - [Testing](#testing)
+
 
 ## <a name="overview"></a> Overview
 The purpose of this repository is an implementation of the "area mapper" robot for ACME robotics (ENPM 808X Final Project). Specifically, this software implements ROS and the [Turtlebot](https://wiki.ros.org/Robots/TurtleBot) platform along with ROS nodes and services to illustrate an autonomous navigation/mapping capability. At a high level, the simulated robot is placed in an environment where it does not know the structure of the world. Its job is to move through the environment and avoid obstacles, all while mapping the environment via laser scans and providing an operator a visual feed of an onboard camera. The operator, via ROS services, can adjust the speed of the robot, the distance threshold that constitutes an impending collision, and also initiate a "take picture" command to capture an image of interest. In addition, an operator can initiate a "stop motion" command as well as a "resume motion" command to the robot. 
@@ -33,16 +41,14 @@ This package requires that [ROS](http://wiki.ros.org/indigo/Installation) is ins
 ```
 sudo apt-get install ros-indigo-turtlebot-gazebo ros-indigo-turtlebot-apps ros-indigo-turtlebot-rviz-launchers
 ```
-This package also requires Octomap. If not installed, Octomap can be installed using the following command:
-```
-sudo apt-get install ros-indigo-octomap
-```
 
 This package also depends on the following ROS packages:
--roscpp
--geometry_msgs
--move_base_msgs
--sensor_msgs
+- roscpp
+- geometry_msgs
+- move_base_msgs
+- sensor_msgs
+-	message_generation
+- image_transport
 
 ## <a name="build-steps"></a> Build Steps
 To use this package, a catkin workspace must be setup first. Assuming catkin has been installed, run the following steps in the directory of your choice (a common one is ~/catkin_ws)
@@ -68,26 +74,60 @@ $ catkin_make
 You should now see a enpm808_final directory in `catkin_ws/build`. 
 
 ## <a name="run-steps"></a> Run steps
+### <a name="roslaunch-gazebo"></a> Running with Gazebo and image_view
 To run the package, open a new terminal, change directories into your catkin workspace, and source your directory. Then, run the launch file using roslaunch:
 ```
 $ cd <PATH_TO_YOUR_DIRECTORY>/catkin_ws
 $ source devel/setup.bash
 $ roslaunch enpm808_final enpm808_final.launch
 ```
-You should see several windows open. You will see a terminal window open that runs the vehicle node, printing messages denoting laser scans are seen. This is also the window where we will see the vehicle node respond to any take image service calls (see [Take an image using rosservice](#take_image_service)). Another window that will appear is the Gazebo simulator window where a simulated turtlebot vehicle will be placed within a demo world (pictured below, left). The final window that will open is an image viewer window. This window shows the current RGB camera feed from onboard the turtlebot robot. As the vehicle moves around, you can watch this window to see if there are any interesting features in the world -- if so, take an image using a ROS service call. An example of this view is shown below on the right. 
+You should see several windows open. You will see a terminal window open that runs the vehicle node which will print messages as certain situations are encountered (e.g. when an obstacle is encountered or the vehicle gets "stuck"). This is also the window where we will see the vehicle node respond to any take image service calls (see [Interacting with the vehicle](#vehicle-interaction)). Another window that will appear is the Gazebo simulator window where a simulated turtlebot vehicle will be placed within a demo world (pictured below, left). The final window that will open is an image viewer window. This window shows the current RGB camera feed from onboard the turtlebot robot. As the vehicle moves around, you can watch this window to see if there are any interesting features in the world -- if so, take an image using a ROS service call. An example of this view is shown below on the right. 
 
 ![gazebo example](./results/gazeboExample.png?raw=true "Gazebo Example")
 
 When the gazebo world is loaded, the turtlebot will start to drive forward. It will drive forward until it encounters an obstacle, at which point it will stop, turn in place until it sees no obstacle, and then continue to drive forward. This is maybe considered a "dumb" way to navigate, but in the desired use cases, the area may be completely unknown and the robot's task is to collect as much information as it can about its surrounding environment. 
 
-## <a name="take_image_service"></a> Take an image using rosservice
+### <a name="roslaunch-rviz"></a> Running with RViz
+**TODO**
+
+## <a name="vehicle-interaction"></a> Interacting with the vehicle (rosservice)
+### <a name="take-image-service"></a> Take an image
 When the vehicle is moving, you may see something that you wish to take a picture of in your image view window. To do so, you can issue a `rosservice` call to the vehicle. The vehicle will see this service and change the `takeImage` flag so that next time it sees the `/camera/rgb/image_raw` topic, it will take and save an image. To make this service call, open a new terminal, change directories to your workspace, source the directory, and call rosservice: 
 ```
 $ cd <PATH_TO_YOUR_DIRECTORY>/catkin_ws
 $ source devel/setup.bash
 $ rosservice call /takeImageService true
 ```
-Note that if the image window seems to freeze even though the turlebot is moving, this is likely due to a performance bottleneck in the VM. Simply closing the image_view window will cause a new one to open as soon as a new /camera topic is received, and this will "reset" the camera view. You shuold see the view changing according to what the turtlebot is currently seeing.
+Note that if the image window seems to freeze even though the turlebot is moving, this is likely due to a performance bottleneck in the VM. Simply closing the image_view window will cause a new one to open as soon as a new /camera topic is received, and this will "reset" the camera view. You should see the view changing according to what the turtlebot is currently seeing.
+
+### <a name="change-speed-service"></a> Change forward speed
+You may also want to change the speed at which the Turtlebot moves forward. To do so, you can issue another `rosservice` call to the vehicle. The vehicle will see this service and change the `forwardSpeed` parameter to the value passed in to the service. To make this service call, open a new terminal, change directories to your workspace, source the directory, and call rosservice: 
+```
+$ cd <PATH_TO_YOUR_DIRECTORY>/catkin_ws
+$ source devel/setup.bash
+$ rosservice call /changeSpeedService 1.0
+```
+The default speed is 0.25 m/s. The above command will change this to 1.0 m/s, causing the vehicle to move faster in the positive x-direction. 
+
+### <a name="change-threshold-service"></a> Change obstacle detection threshold
+Another parameter that can be modified via `rosservice` is the distance threshold at which the vehicle will stop moving to avoid an obstacle. As the vehicle moves throughout the environment, it checks its laser scan data for any obstacles closer than this distance threshold. If one is seen, the vehicle stops and turns in place until it no longer sees an obstacle. To make this service call, open a new terminal, change directories to your workspace, source the directory, and call rosservice: 
+```
+$ cd <PATH_TO_YOUR_DIRECTORY>/catkin_ws
+$ source devel/setup.bash
+$ rosservice call /changeThresholdService 0.5
+```
+The default threshold is 1 m. The above command will change this to 0.5 m, causing the vehicle to get closer to an obstacle before it decides to take evasive actions. 
+
+### <a name="pause-motion-service"></a> Pause / Resume vehicle motion
+Using `rosservice`, we can also tell the vehicle to stop in place (or subsequently resume its motion). To make this service call, open a new terminal, change directories to your workspace, source the directory, and call rosservice: 
+```
+$ cd <PATH_TO_YOUR_DIRECTORY>/catkin_ws
+$ source devel/setup.bash
+$ rosservice call /togglePauseMotionService true
+```
+Passing in `true` will cause the vehicle to stop in place if it is not already stopped, while passing in `false` will make the vehicle resume motion if it is not already moving. Note that the sensor data will continue to stream, it is only the vehicle that will stop.
+
+*NOTE: For some reason, every once in a while the vehicle would not stop when a "stop" command was issued. The topic published on `/mobile_base/commands/velocity` was 0.0 for all linear and angular velocity components, but the vehicle would continue to move. I found that to stop the vehicle more reliably, a very small linear or angular velocity component should be sent to the vehicle. In this implementation, when a "stop" command is issued, the topic published is 0.0 for all linear and angular velocity components except for the z-component of angular velocity. Instead, the z-component is set to 0.00000001, which seems to stop the robot in place reliably.*
 
 ## <a name="testing"></a> Testing
 Unit tests have been written for this repository. To run the tests, open a new terminal and change directories to your catkin workspace. Then, run the tests using catkin and the test launch file:
@@ -99,5 +139,6 @@ You should see a summary of the number of tests passed/failed output on the scre
 
 ## <a name="todo"></a> TODO
 - Output saved images and bag files to specified directory
-- Document workaround for "stopping in place"--had to send a non-zero, very small angular rate
+- Truly fix "stop" command instead of implementing the small-value workaround discussed
 - Fix gmapping-turtlebot issues to create an occupancy grid in the Nootrix Ubuntu VM
+- roslaunch file for rviz visualization without gazebo, showing laser scan data
