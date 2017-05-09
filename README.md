@@ -37,6 +37,9 @@ The SIP Process followed is detailed in a spreadsheet at the following link:
 Sprint planning and other review notes are provided in the google doc at the following link:
 [Sprint Planning](https://docs.google.com/document/d/1SpJCYgMqnaWGYB6uBX_Ns0fMZDnbV28vtPiZLobzIR4/edit?usp=sharing)
 
+## <a name="presentation"></a> ENPM 808X Presentation
+The final presentation for the semester is a Google Slides presentation located at the following link: [Presentation slides](https://docs.google.com/presentation/d/1i7uek1mZ_PQ8fuppnxsgIAiFNSbUhjTydXQjnxpaI24/edit?usp=sharing)
+
 ## <a name="prerequisites-dependencies"></a> Prerequisites / Dependencies
 This package requires that [ROS](http://wiki.ros.org/indigo/Installation) is installed as well as [catkin](http://wiki.ros.org/catkin?distro=indigo#Installing_catkin). This was tested using ROS Indigo, however any subsequent versions of ROS should still work. This package also requires [Gazebo](http://gazebosim.org/) and [Turtlebot_Gazebo](http://wiki.ros.org/turtlebot_gazebo) to be installed. Gazebo should already be installed as part of the ROS distro, however Turtlebot_Gazebo may need to be installed. To do so, open a terminal and run the following command:
 ```
