@@ -16,6 +16,7 @@
   - [Change obstacle detection threshold](#change-threshold-service)
   - [Pause / Resume vehicle motion](#pause-motion-service)
 - [Testing](#testing)
+- [Doxygen](#doxygen)
 
 
 ## <a name="overview"></a> Overview
@@ -171,6 +172,19 @@ $ cd <PATH_TO_YOUR_DIRECTORY>/catkin_ws/src
 $ catkin_make run_tests && catkin_test_results
 ```
 You should see a summary of the number of tests passed/failed output on the screen. 
+
+## <a name="doxygen"></a> Doxygen Documentation
+
+If any changes are made to the source code, please document them and re-run the Doxygen documentation generation. To do so, simply change into the `docs/` directory and run:
+
+```
+$ cd docs/
+$ doxygen Doxyfile
+```
+
+If Doxygen is not installed, install using
+
+`sudo apt-get install doxygen`
 
 ## <a name="todo"></a> TODO
 - Output saved images and bag files to specified directory
