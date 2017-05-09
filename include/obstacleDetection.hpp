@@ -50,46 +50,46 @@
  * @brief ObstacleDetection class handles determining if the vehicle is going to collide using laser scans
  */
 class ObstacleDetection {
-public:
-	/**
-	 * @brief ObstacleDetection constructor
-	 */
-	ObstacleDetection(double threshold);
+ public:
+  /**
+   * @brief ObstacleDetection constructor
+   */
+  ObstacleDetection(double threshold);
 
-	/**
-	 * @brief Callback function for the laser scan. Detects if the vehicle is about to collide with an obstacle or not
-	 */
-	bool detectObstacle(const sensor_msgs::LaserScan msg);
+  /**
+   * @brief Callback function for the laser scan. Detects if the vehicle is about to collide with an obstacle or not
+   */
+  bool detectObstacle(const sensor_msgs::LaserScan msg);
 
-	/**
-	 * @brief return the current threshold for how close the vehicle should get to an object
-	 */
-	double getDistanceThreshold() {
-		return distanceThreshold;
-	}
-	;
+  /**
+   * @brief return the current threshold for how close the vehicle should get to an object
+   */
+  double getDistanceThreshold() {
+    return distanceThreshold;
+  }
+  ;
 
-	/**
-	 * @brief set the threshold for how close the vehicle should get to an object
-	 */
-	void setDistanceThreshold(double threshold) {
-		distanceThreshold = threshold;
-	}
-	;
+  /**
+   * @brief set the threshold for how close the vehicle should get to an object
+   */
+  void setDistanceThreshold(double threshold) {
+    distanceThreshold = threshold;
+  }
+  ;
 
-private:
-	/**
-	 * @brief container for a ROS node handler
-	 */
-	ros::NodeHandle nh;
+ private:
+  /**
+   * @brief container for a ROS node handler
+   */
+  ros::NodeHandle nh;
 
-	/**
-	 * @brief container for a ROS subscriber for the laser scan data
-	 */
-	ros::Subscriber laserSub;
+  /**
+   * @brief container for a ROS subscriber for the laser scan data
+   */
+  ros::Subscriber laserSub;
 
-	/**
-	 * @brief container for the threshold for how close the vehicle should get to an object
-	 */
-	double distanceThreshold;
+  /**
+   * @brief container for the threshold for how close the vehicle should get to an object
+   */
+  double distanceThreshold;
 };

@@ -50,45 +50,47 @@
 /**
  * @brief Vehicle constructor
  */
-Vehicle::Vehicle() :
-		publishedMessagesCount(0) {
-	motionController = new MotionController(0.25);
-	camera = new Camera();
+Vehicle::Vehicle()
+    : publishedMessagesCount(0) {
+  motionController = new MotionController(0.25);
+  camera = new Camera();
 
-	// Set up subscribers
-	cameraSub = nh.subscribe < sensor_msgs::Image
-			> ("/camera/rgb/image_raw", 500, &Camera::cameraCallback, camera);
+  // Set up subscribers
+  cameraSub = nh.subscribe < sensor_msgs::Image
+      > ("/camera/rgb/image_raw", 500, &Camera::cameraCallback, camera);
 
-	laserSub =
-			nh.subscribe < sensor_msgs::LaserScan
-					> ("/scan", 500, &MotionController::determineAction, motionController);
+  laserSub = nh.subscribe < sensor_msgs::LaserScan
+      > ("/scan", 500, &MotionController::determineAction, motionController);
 
-	// Register services with the master
-	takeImageServer = nh.advertiseService("takeImageService", &Camera::takeImage,
-			camera);
-	changeThresholdServer = nh.advertiseService("changeThresholdService",
-			&MotionController::changeThreshold, motionController);
-	changeSpeedServer = nh.advertiseService("changeSpeedService",
-			&MotionController::changeSpeed, motionController);
-	togglePauseServer = nh.advertiseService("togglePauseMotionService",
-			&MotionController::togglePause, motionController);
+  // Register services with the master
+  takeImageServer = nh.advertiseService("takeImageService", &Camera::takeImage,
+                                        camera);
+  changeThresholdServer = nh.advertiseService(
+      "changeThresholdService", &MotionController::changeThreshold,
+      motionController);
+  changeSpeedServer = nh.advertiseService("changeSpeedService",
+                                          &MotionController::changeSpeed,
+                                          motionController);
+  togglePauseServer = nh.advertiseService("togglePauseMotionService",
+                                          &MotionController::togglePause,
+                                          motionController);
 
-	// Set up publisher:
-	drivePub = nh.advertise < geometry_msgs::Twist
-			> ("/mobile_base/commands/velocity", 1000);
+  // Set up publisher:
+  drivePub = nh.advertise < geometry_msgs::Twist
+      > ("/mobile_base/commands/velocity", 1000);
 }
 
 /**
  * @brief drive the vehicle autonomously using laser scan data as sensor feedback
  */
 void Vehicle::drive() {
-	// Grab current vehicle action:
-	geometry_msgs::Twist vehicleCommand = motionController->getVehicleAction();
+  // Grab current vehicle action:
+  geometry_msgs::Twist vehicleCommand = motionController->getVehicleAction();
 
-	// Publish command:
-	drivePub.publish(vehicleCommand);
+  // Publish command:
+  drivePub.publish(vehicleCommand);
 
-	// Increment published message counter:
-	publishedMessagesCount++;
+  // Increment published message counter:
+  publishedMessagesCount++;
 }
 

@@ -63,7 +63,6 @@ TEST(TestSuite, detect_obstacle) {
   collideMsg.ranges.push_back(0.0);
   collideMsg.intensities.push_back(0);
 
-
   EXPECT_TRUE(obstacleDetection->detectObstacle(collideMsg));
 
   // Create dummy laser scan to provide a fake non-collision:

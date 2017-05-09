@@ -49,23 +49,22 @@
  * @brief Test that verifies that the vehicle is publishing velocity commands
  */
 TEST(TestSuite, drive_command_published) {
+  // Handle for the process node. Will handle initialization and
+  //   cleanup of the node
+  ros::NodeHandle n;
 
-	// Handle for the process node. Will handle initialization and
-	//   cleanup of the node
-	ros::NodeHandle n;
+  // Vehicle container
+  Vehicle *vehicle = new Vehicle();
 
-	// Vehicle container
-	Vehicle *vehicle = new Vehicle();
+  // Check that we've published a message:
+  EXPECT_EQ(0, vehicle->getPublishedMessagesCount());
 
-	// Check that we've published a message:
-	EXPECT_EQ(0, vehicle->getPublishedMessagesCount());
+  // While we are running, drive the vehicle autonomously
+  vehicle->drive();
 
-	// While we are running, drive the vehicle autonomously
-	vehicle->drive();
+  // "Spin" a callback in case we set up any callbacks
+  ros::spinOnce();
 
-	// "Spin" a callback in case we set up any callbacks
-	ros::spinOnce();
-
-	// Check that we've published a message:
-	EXPECT_EQ(1, vehicle->getPublishedMessagesCount());
+  // Check that we've published a message:
+  EXPECT_EQ(1, vehicle->getPublishedMessagesCount());
 }

@@ -51,7 +51,8 @@
 TEST(TestSuite, take_image) {
   Camera *camera = new Camera();
 
-  // TODO: Instead of testing if this returns true, test that the service is called?
-  // 		- Need to test the length of the array, too
+  // TODO(patnolan33): Instead of testing if this returns true,
+  //   test that the service is called?
+  //    - Need to test the length of the array, too
   EXPECT_EQ(0, camera->getSavedImageFilenames().size());
 }

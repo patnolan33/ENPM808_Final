@@ -1,0 +1,16 @@
+$ ../../../../cpplint.py ./src/*.cpp ./test/*.cpp
+
+
+
+Done processing ./src/camera.cpp
+Done processing ./src/main.cpp
+Done processing ./src/motionController.cpp
+Done processing ./src/obstacleDetection.cpp
+Done processing ./src/vehicle.cpp
+Done processing ./test/cameraTest.cpp
+Done processing ./test/main.cpp
+Done processing ./test/motionControllerTest.cpp
+Done processing ./test/obstacleDetectionTest.cpp
+Done processing ./test/vehicleTest.cpp
+Total errors found: 0
+

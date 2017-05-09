@@ -53,87 +53,87 @@
  * @brief MotionController class handles determining vehicle control actions
  */
 class MotionController {
-public:
-	/**
-	 * @brief MotionController constructor
-	 */
-	MotionController(double forwardSpeed);
+ public:
+  /**
+   * @brief MotionController constructor
+   */
+  MotionController(double forwardSpeed);
 
-	/**
-	 * @brief Determine a vehicle action based on results from the obstacle detector
-	 */
-	void determineAction(const sensor_msgs::LaserScan::ConstPtr& msg);
+  /**
+   * @brief Determine a vehicle action based on results from the obstacle detector
+   */
+  void determineAction(const sensor_msgs::LaserScan::ConstPtr& msg);
 
-	/**
-	 * @brief Response to the change speed service to set forward speed
-	 */
-	bool changeSpeed(enpm808_final::changeSpeedService::Request &req,
-			enpm808_final::changeSpeedService::Response &resp);
+  /**
+   * @brief Response to the change speed service to set forward speed
+   */
+  bool changeSpeed(enpm808_final::changeSpeedService::Request &req,
+                   enpm808_final::changeSpeedService::Response &resp);
 
-	/**
-	 * @brief Response to the change threshold service to set distance threshold
-	 */
-	bool changeThreshold(enpm808_final::changeThresholdService::Request &req,
-			enpm808_final::changeThresholdService::Response &resp);
+  /**
+   * @brief Response to the change threshold service to set distance threshold
+   */
+  bool changeThreshold(enpm808_final::changeThresholdService::Request &req,
+                       enpm808_final::changeThresholdService::Response &resp);
 
-	/**
-	 * @brief Response to the toggle pause motion service
-	 */
-	bool togglePause(enpm808_final::togglePauseMotion::Request &req,
-			enpm808_final::togglePauseMotion::Response &resp);
+  /**
+   * @brief Response to the toggle pause motion service
+   */
+  bool togglePause(enpm808_final::togglePauseMotion::Request &req,
+                   enpm808_final::togglePauseMotion::Response &resp);
 
-	/**
-	 * @brief change the forward speed of the robot
-	 */
-	void setForwardSpeed(double speed) {
-		forwardSpeed = speed;
-	}
-	;
+  /**
+   * @brief change the forward speed of the robot
+   */
+  void setForwardSpeed(double speed) {
+    forwardSpeed = speed;
+  }
+  ;
 
-	/**
-	 * @brief return the current forward speed of the robot
-	 */
-	double getForwardSpeed() {
-		return forwardSpeed;
-	}
-	;
+  /**
+   * @brief return the current forward speed of the robot
+   */
+  double getForwardSpeed() {
+    return forwardSpeed;
+  }
+  ;
 
-	/**
-	 * @brief return the current vehicle action
-	 */
-	geometry_msgs::Twist getVehicleAction() {
-		return vehicleAction;
-	}
-	;
+  /**
+   * @brief return the current vehicle action
+   */
+  geometry_msgs::Twist getVehicleAction() {
+    return vehicleAction;
+  }
+  ;
 
-private:
-	/**
-	 * @brief container for an obstacle detector for the vehicle
-	 */
-	ObstacleDetection *obstacleDetection;
+ private:
+  /**
+   * @brief container for an obstacle detector for the vehicle
+   */
+  ObstacleDetection *obstacleDetection;
 
-	/**
-	 * @brief container for the forward speed of the vehicle
-	 */
-	double forwardSpeed;
+  /**
+   * @brief container for the forward speed of the vehicle
+   */
+  double forwardSpeed;
 
-	/**
-	 * @brief Container for Twist message to be sent the vehicle on next "drive" command
-	 */
-	geometry_msgs::Twist vehicleAction;
+  /**
+   * @brief Container for Twist message to be sent the vehicle on next "drive" command
+   */
+  geometry_msgs::Twist vehicleAction;
 
-	/**
-	 * @brief Flag to denote if we should pause the robot or continue motion
-	 */
-	bool pauseMotion;
+  /**
+   * @brief Flag to denote if we should pause the robot or continue motion
+   */
+  bool pauseMotion;
 
-	/**
-	 * @brief Flag to denote that we have entered a "collision" state and are turning
-	 */
-	bool obstaclePresent;
+  /**
+   * @brief Flag to denote that we have entered a "collision" state and are turning
+   */
+  bool obstaclePresent;
 
-	/**
-	 * @brief Counter for how long we have been spinning trying to find a free space
-	 */
-	int obstacleCounter;
+  /**
+   * @brief Counter for how long we have been spinning trying to find a free space
+   */
+  int obstacleCounter;
 };

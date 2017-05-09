@@ -45,8 +45,8 @@
 #include <gtest/gtest.h>
 
 int main(int argc, char** argv) {
-    ros::init(argc, argv, "enpm808_finalTest");
+  ros::init(argc, argv, "enpm808_finalTest");
 
-    ::testing::InitGoogleTest(&argc, argv);
-    return RUN_ALL_TESTS();
+  ::testing::InitGoogleTest(&argc, argv);
+  return RUN_ALL_TESTS();
 }

@@ -46,30 +46,29 @@
 #include <vehicle.hpp>
 
 int main(int argc, char **argv) {
-	// Initialize ROS and name our node "enpm808_final"
-	ros::init(argc, argv, "enpm808_final");
+  // Initialize ROS and name our node "enpm808_final"
+  ros::init(argc, argv, "enpm808_final");
 
-	// Handle for the process node. Will handle initialization and
-	//   cleanup of the node
-	ros::NodeHandle n;
+  // Handle for the process node. Will handle initialization and
+  //   cleanup of the node
+  ros::NodeHandle n;
 
-	// Set up the publisher rate to 10 Hz
-	ros::Rate loop_rate(10);
+  // Set up the publisher rate to 10 Hz
+  ros::Rate loop_rate(10);
 
-	// Vehicle container
-	Vehicle *vehicle = new Vehicle();
+  // Vehicle container
+  Vehicle *vehicle = new Vehicle();
 
-	while (ros::ok()) {
+  while (ros::ok()) {
+    // While we are running, drive the vehicle autonomously
+    vehicle->drive();
 
-		// While we are running, drive the vehicle autonomously
-		vehicle->drive();
+    // "Spin" a callback in case we set up any callbacks
+    ros::spinOnce();
 
-		// "Spin" a callback in case we set up any callbacks
-		ros::spinOnce();
+    // Sleep for the remaining time until we hit our 10 Hz rate
+    loop_rate.sleep();
+  }
 
-		// Sleep for the remaining time until we hit our 10 Hz rate
-		loop_rate.sleep();
-	}
-
-	return 0;
+  return 0;
 }

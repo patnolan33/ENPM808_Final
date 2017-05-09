@@ -41,8 +41,6 @@
  *  @copyright BSD
  */
 
-#include <sstream>
-#include <string>
 #include <stdlib.h>
 #include <ros/ros.h>
 #include <camera.hpp>
@@ -52,60 +50,62 @@
 #include <opencv2/core/core.hpp>
 #include <opencv2/highgui/highgui.hpp>
 #include <image_transport/image_transport.h>
+#include <sstream>
+#include <string>
+
 
 /**
  * @brief Camera constructor
  */
-Camera::Camera() :
-		takeImageFlag(false) {
+Camera::Camera()
+    : takeImageFlag(false) {
 
-	// Register client to "takeImage" service
-	cameraClient = nh.serviceClient < enpm808_final::takeImageService
-			> ("takeImage");
+  // Register client to "takeImage" service
+  cameraClient = nh.serviceClient < enpm808_final::takeImageService
+      > ("takeImage");
 }
 
 /**
  * @brief Camera topic callback takes a picture if flag has been set
  */
 void Camera::cameraCallback(const sensor_msgs::ImageConstPtr& msg) {
-	if (takeImageFlag) {
-		cv_bridge::CvImagePtr cv_ptr;
-		try {
-			cv_ptr = cv_bridge::toCvCopy(msg, "bgr8");
-		} catch (cv_bridge::Exception& e) {
-			ROS_ERROR("cv_bridge exception: %s", e.what());
-			return;
-		}
+  if (takeImageFlag) {
+    cv_bridge::CvImagePtr cv_ptr;
+    try {
+      cv_ptr = cv_bridge::toCvCopy(msg, "bgr8");
+    } catch (cv_bridge::Exception& e) {
+      ROS_ERROR("cv_bridge exception: %s", e.what());
+      return;
+    }
 
-		// Save OpenCV Image to file:
-		cv::namedWindow("Image window");
-		cv::imshow("Image window", cv_ptr->image);
-		int count = savedImages.size() + 1;
-		std::ostringstream filename;
-		filename << "turtleBotImage_" << count << ".jpg";
-		cv::imwrite(filename.str(), cv_ptr->image);
+    // Save OpenCV Image to file:
+    cv::namedWindow("Image window");
+    cv::imshow("Image window", cv_ptr->image);
+    int count = savedImages.size() + 1;
+    std::ostringstream filename;
+    filename << "turtleBotImage_" << count << ".jpg";
+    cv::imwrite(filename.str(), cv_ptr->image);
 
-		ROS_INFO("Saving image %s to ~/.ros/", filename.str().c_str());
+    ROS_INFO("Saving image %s to ~/.ros/", filename.str().c_str());
 
-		// Add filename to list of saved images:
-		savedImages.push_back(filename.str());
+    // Add filename to list of saved images:
+    savedImages.push_back(filename.str());
 
-		// Reset Flag:
-		takeImageFlag = false;
-	}
+    // Reset Flag:
+    takeImageFlag = false;
+  }
 }
 
 /**
  * @brief Set the image flag so that the next time a camera topic is seen, we take a picture
  */
 bool Camera::takeImage(enpm808_final::takeImageService::Request &req,
-		enpm808_final::takeImageService::Response &resp) {
-//	bool flag = req.flag;
-	resp.resp = true;
+                       enpm808_final::takeImageService::Response &resp) {
+  resp.resp = true;
 
-	ROS_INFO_STREAM("Set flag to [true], save the next available image frame.");
+  ROS_INFO_STREAM("Set flag to [true], save the next available image frame.");
 
-	takeImageFlag = resp.resp;
+  takeImageFlag = resp.resp;
 
-	return true;
+  return true;
 }
