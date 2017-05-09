@@ -1,0 +1,26 @@
+<launch>
+    <arg name="record" default="false"/>
+
+    <include file="$(find turtlebot_gazebo)/launch/turtlebot_world.launch">
+        <arg name="world_file" value="$(find enpm808_final)/gazebo_world/turtlebot_walker_demo_2" />
+        <arg name="gui" value="false" />
+    </include>
+    
+    <node
+        pkg="enpm808_final"
+        name="vehicle"
+        type="vehicle"
+		output="screen" 
+		launch-prefix="gnome-terminal --command"
+    />
+
+	<node name="rviz" pkg="rviz" type="rviz" args="-d $(find enpm808_final)/rviz/enpm808_demo.rviz" />
+
+    <node
+        pkg="rosbag"
+        name="record"
+        type="record"
+        args="-a -O enpm808Final.bag -x /camera/(.*)"
+        if="$(arg record)"
+    />
+</launch>

@@ -75,11 +75,11 @@ You should now see a enpm808_final directory in `catkin_ws/build`.
 
 ## <a name="run-steps"></a> Run steps
 ### <a name="roslaunch-gazebo"></a> Running with Gazebo and image_view
-To run the package, open a new terminal, change directories into your catkin workspace, and source your directory. Then, run the launch file using roslaunch:
+To run the package with the Gazebo world rendered, open a new terminal, change directories into your catkin workspace, and source your directory. Then, run the launch file using roslaunch:
 ```
 $ cd <PATH_TO_YOUR_DIRECTORY>/catkin_ws
 $ source devel/setup.bash
-$ roslaunch enpm808_final enpm808_final.launch
+$ roslaunch enpm808_final gazebo_imageview_demo.launch
 ```
 You should see several windows open. You will see a terminal window open that runs the vehicle node which will print messages as certain situations are encountered (e.g. when an obstacle is encountered or the vehicle gets "stuck"). This is also the window where we will see the vehicle node respond to any take image service calls (see [Interacting with the vehicle](#vehicle-interaction)). Another window that will appear is the Gazebo simulator window where a simulated turtlebot vehicle will be placed within a demo world (pictured below, left). The final window that will open is an image viewer window. This window shows the current RGB camera feed from onboard the turtlebot robot. As the vehicle moves around, you can watch this window to see if there are any interesting features in the world -- if so, take an image using a ROS service call. An example of this view is shown below on the right. 
 
@@ -88,7 +88,17 @@ You should see several windows open. You will see a terminal window open that ru
 When the gazebo world is loaded, the turtlebot will start to drive forward. It will drive forward until it encounters an obstacle, at which point it will stop, turn in place until it sees no obstacle, and then continue to drive forward. This is maybe considered a "dumb" way to navigate, but in the desired use cases, the area may be completely unknown and the robot's task is to collect as much information as it can about its surrounding environment. 
 
 ### <a name="roslaunch-rviz"></a> Running with RViz
-**TODO**
+To run the package with the Gazebo world rendered, open a new terminal, change directories into your catkin workspace, and source your directory. Then, run the launch file using roslaunch:
+```
+$ cd <PATH_TO_YOUR_DIRECTORY>/catkin_ws
+$ source devel/setup.bash
+$ roslaunch enpm808_final rviz_demo.launch
+```
+You should see a terminal window open that runs the vehicle node which will print messages as certain situations are encountered (e.g. when an obstacle is encountered or the vehicle gets "stuck"). This is also the window where we will see the vehicle node respond to any take image service calls (see [Interacting with the vehicle](#vehicle-interaction)). Another window that will appear is the RViz viewer window where a simulated turtlebot vehilce will be placed in an empty world. The configuration file that is loaded by default (located in `/rviz/` of this repository) loads the LaserScan, DepthCloud, and Image displays. In the bottom left-hand corner of the RViz window shown below, you can see the RGB camera feed from the vehicle. In the main window, as the vehicle drives around you will see multicolored lines appear denoting depth readings obtained from Turtlebot's onboard sensors. This is the DepthCloud data, where "hot" colors denote closer depth readings and "cold" colors denote a distance reading farther away. The LaserScan data is also shown, but it is hard to see in the image--it is the thin, red line in the purple/blue regions of the image shown. This is a single array of depth readings straight out from the robot instead of in 3D.
+
+![gazebo example](./results/rviz_screenshot.png?raw=true "RViz Example")
+
+When the RViz window is loaded, the turtlebot will start to drive forward. Similar to the Gazebo launch option above, it will drive forward until it encounters an obstacle, at which point it will stop, turn in place until it sees no obstacle, and then continue to drive forward. As it drives around, you will see the image feed update as well as the laser scan and depth data update in the view. 
 
 ## <a name="vehicle-interaction"></a> Interacting with the vehicle (rosservice)
 ### <a name="take-image-service"></a> Take an image
@@ -129,6 +139,31 @@ Passing in `true` will cause the vehicle to stop in place if it is not already s
 
 *NOTE: For some reason, every once in a while the vehicle would not stop when a "stop" command was issued. The topic published on `/mobile_base/commands/velocity` was 0.0 for all linear and angular velocity components, but the vehicle would continue to move. I found that to stop the vehicle more reliably, a very small linear or angular velocity component should be sent to the vehicle. In this implementation, when a "stop" command is issued, the topic published is 0.0 for all linear and angular velocity components except for the z-component of angular velocity. Instead, the z-component is set to 0.00000001, which seems to stop the robot in place reliably.*
 
+## <a name="recording-rosbag"></a> Recording using rosbag
+The package `rosbag` is a common ROS tool that is used to record and playback ROS topic messages. The launch file for this project accepts a boolean flag called `record` that toggles rosbag recording if included (true for record, false for do not record). To run the package and record the published topics, run:
+```
+$ cd <PATH_TO_YOUR_DIRECTORY>/catkin_ws
+$ source devel/setup.bash
+$ roslaunch enpm808_final gazebo_imageview_demo.launch record:=true
+```
+Alternatively, you can run the rviz_demo.launch file using `$ roslaunch enpm808_final rviz_demo.launch record:=true`
+
+rosbag will save a file named `enpm808Final.bag` in the `~/.ros/` directory. To inspect it, simply change into the directory with `cd ~/.ros/` and run `rosbag info enpm808Final.bag`. This will output various information about the file, such as how long the file recorded, the start and end times, file size, the number of messages, and the topics recorded. 
+
+*NOTE: These launch files will not record camera data, like RGB images and depth images, because the file size will become too large too quickly. If camera data is needed, rosbag will have to be run separately in another terminal.*
+
+## <a name="playback-rosbag"></a> Playback using rosbag
+We can playback this recorded data to recreate a recorded scenario. Assuming a rosbag recording has taken place according to the above process, playback the rosbag file by executing:
+```
+$ cd ~/.ros/
+$ rosbag play enpm808Final.bag
+```
+In the rosbag terminal, you will see an indication that the rosbag file is running. This will playback the recorded vehicle motion and sensor data (minus the camera data), with which you can use however you like provided you subscribe to the topics being published.  
+
+An example bag file is located in `/rosbag/` of this repository. To play this bag file, instead of changing directories to `~/.ros/`, simply navigate to `./rosbag` and run the `rosbag play enpm808Final.bag` command.
+
+*NOTE: Gazebo should not be running when playing back with rosbag.*
+
 ## <a name="testing"></a> Testing
 Unit tests have been written for this repository. To run the tests, open a new terminal and change directories to your catkin workspace. Then, run the tests using catkin and the test launch file:
 ```
@@ -141,4 +176,3 @@ You should see a summary of the number of tests passed/failed output on the scre
 - Output saved images and bag files to specified directory
 - Truly fix "stop" command instead of implementing the small-value workaround discussed
 - Fix gmapping-turtlebot issues to create an occupancy grid in the Nootrix Ubuntu VM
-- roslaunch file for rviz visualization without gazebo, showing laser scan data
