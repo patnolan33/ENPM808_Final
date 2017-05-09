@@ -1,0 +1,79 @@
+\hypertarget{classCamera}{\section{Camera Class Reference}
+\label{classCamera}\index{Camera@{Camera}}
+}
+
+
+\hyperlink{classCamera}{Camera} class handles viewing onboard imagery and taking images.  
+
+
+
+
+{\ttfamily \#include $<$camera.\-hpp$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classCamera_a01f94c3543f56ede7af49dc778f19331}{Camera} ()
+\begin{DoxyCompactList}\small\item\em \hyperlink{classCamera}{Camera} constructor. \end{DoxyCompactList}\item 
+bool \hyperlink{classCamera_a2702d5875c0b442aa1527a47c0b495de}{take\-Image} (enpm808\-\_\-final\-::take\-Image\-Service\-::\-Request \&req, enpm808\-\_\-final\-::take\-Image\-Service\-::\-Response \&resp)
+\begin{DoxyCompactList}\small\item\em Set the image flag so that the next time a camera topic is seen, we take a picture. \end{DoxyCompactList}\item 
+void \hyperlink{classCamera_aff57f8419ee9de1262592171a84ddf8d}{camera\-Callback} (const sensor\-\_\-msgs\-::\-Image\-Const\-Ptr \&msg)
+\begin{DoxyCompactList}\small\item\em \hyperlink{classCamera}{Camera} topic callback takes a picture if flag has been set. \end{DoxyCompactList}\item 
+std\-::vector$<$ std\-::string $>$ \hyperlink{classCamera_a7af4db092be152e181938768b464e9b0}{get\-Saved\-Image\-Filenames} ()
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\hyperlink{classCamera}{Camera} class handles viewing onboard imagery and taking images. 
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classCamera_a01f94c3543f56ede7af49dc778f19331}{\index{Camera@{Camera}!Camera@{Camera}}
+\index{Camera@{Camera}!Camera@{Camera}}
+\subsubsection[{Camera}]{\setlength{\rightskip}{0pt plus 5cm}Camera\-::\-Camera (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classCamera_a01f94c3543f56ede7af49dc778f19331}
+
+
+\hyperlink{classCamera}{Camera} constructor. 
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classCamera_aff57f8419ee9de1262592171a84ddf8d}{\index{Camera@{Camera}!camera\-Callback@{camera\-Callback}}
+\index{camera\-Callback@{camera\-Callback}!Camera@{Camera}}
+\subsubsection[{camera\-Callback}]{\setlength{\rightskip}{0pt plus 5cm}void Camera\-::camera\-Callback (
+\begin{DoxyParamCaption}
+\item[{const sensor\-\_\-msgs\-::\-Image\-Const\-Ptr \&}]{msg}
+\end{DoxyParamCaption}
+)}}\label{classCamera_aff57f8419ee9de1262592171a84ddf8d}
+
+
+\hyperlink{classCamera}{Camera} topic callback takes a picture if flag has been set. 
+
+\hypertarget{classCamera_a7af4db092be152e181938768b464e9b0}{\index{Camera@{Camera}!get\-Saved\-Image\-Filenames@{get\-Saved\-Image\-Filenames}}
+\index{get\-Saved\-Image\-Filenames@{get\-Saved\-Image\-Filenames}!Camera@{Camera}}
+\subsubsection[{get\-Saved\-Image\-Filenames}]{\setlength{\rightskip}{0pt plus 5cm}std\-::vector$<$std\-::string$>$ Camera\-::get\-Saved\-Image\-Filenames (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classCamera_a7af4db092be152e181938768b464e9b0}
+\hypertarget{classCamera_a2702d5875c0b442aa1527a47c0b495de}{\index{Camera@{Camera}!take\-Image@{take\-Image}}
+\index{take\-Image@{take\-Image}!Camera@{Camera}}
+\subsubsection[{take\-Image}]{\setlength{\rightskip}{0pt plus 5cm}bool Camera\-::take\-Image (
+\begin{DoxyParamCaption}
+\item[{enpm808\-\_\-final\-::take\-Image\-Service\-::\-Request \&}]{req, }
+\item[{enpm808\-\_\-final\-::take\-Image\-Service\-::\-Response \&}]{resp}
+\end{DoxyParamCaption}
+)}}\label{classCamera_a2702d5875c0b442aa1527a47c0b495de}
+
+
+Set the image flag so that the next time a camera topic is seen, we take a picture. 
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+/home/viki/\-Documents/\-E\-N\-P\-M808\-X/\-Final/catkin\-\_\-ws/src/\-E\-N\-P\-M808\-\_\-\-Final/include/\hyperlink{camera_8hpp}{camera.\-hpp}\item 
+/home/viki/\-Documents/\-E\-N\-P\-M808\-X/\-Final/catkin\-\_\-ws/src/\-E\-N\-P\-M808\-\_\-\-Final/src/\hyperlink{camera_8cpp}{camera.\-cpp}\end{DoxyCompactItemize}

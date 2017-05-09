@@ -1,0 +1,82 @@
+\hypertarget{classObstacleDetection}{\section{Obstacle\-Detection Class Reference}
+\label{classObstacleDetection}\index{Obstacle\-Detection@{Obstacle\-Detection}}
+}
+
+
+\hyperlink{classObstacleDetection}{Obstacle\-Detection} class handles determining if the vehicle is going to collide using laser scans.  
+
+
+
+
+{\ttfamily \#include $<$obstacle\-Detection.\-hpp$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classObstacleDetection_a9271504043e6aeb2ae9cfc0f9ed4940e}{Obstacle\-Detection} (double threshold)
+\begin{DoxyCompactList}\small\item\em \hyperlink{classObstacleDetection}{Obstacle\-Detection} constructor. \end{DoxyCompactList}\item 
+bool \hyperlink{classObstacleDetection_a31418bbbef60d8dab3d5daf413be6040}{detect\-Obstacle} (const sensor\-\_\-msgs\-::\-Laser\-Scan msg)
+\begin{DoxyCompactList}\small\item\em Callback function for the laser scan. Detects if the vehicle is about to collide with an obstacle or not. \end{DoxyCompactList}\item 
+double \hyperlink{classObstacleDetection_a77d48fccad655af0c933ec2fc8abab7e}{get\-Distance\-Threshold} ()
+\begin{DoxyCompactList}\small\item\em return the current threshold for how close the vehicle should get to an object \end{DoxyCompactList}\item 
+void \hyperlink{classObstacleDetection_a2f232b84a73da8e6092b71ed0a6f0f4e}{set\-Distance\-Threshold} (double threshold)
+\begin{DoxyCompactList}\small\item\em set the threshold for how close the vehicle should get to an object \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\hyperlink{classObstacleDetection}{Obstacle\-Detection} class handles determining if the vehicle is going to collide using laser scans. 
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classObstacleDetection_a9271504043e6aeb2ae9cfc0f9ed4940e}{\index{Obstacle\-Detection@{Obstacle\-Detection}!Obstacle\-Detection@{Obstacle\-Detection}}
+\index{Obstacle\-Detection@{Obstacle\-Detection}!ObstacleDetection@{Obstacle\-Detection}}
+\subsubsection[{Obstacle\-Detection}]{\setlength{\rightskip}{0pt plus 5cm}Obstacle\-Detection\-::\-Obstacle\-Detection (
+\begin{DoxyParamCaption}
+\item[{double}]{threshold}
+\end{DoxyParamCaption}
+)}}\label{classObstacleDetection_a9271504043e6aeb2ae9cfc0f9ed4940e}
+
+
+\hyperlink{classObstacleDetection}{Obstacle\-Detection} constructor. 
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classObstacleDetection_a31418bbbef60d8dab3d5daf413be6040}{\index{Obstacle\-Detection@{Obstacle\-Detection}!detect\-Obstacle@{detect\-Obstacle}}
+\index{detect\-Obstacle@{detect\-Obstacle}!ObstacleDetection@{Obstacle\-Detection}}
+\subsubsection[{detect\-Obstacle}]{\setlength{\rightskip}{0pt plus 5cm}bool Obstacle\-Detection\-::detect\-Obstacle (
+\begin{DoxyParamCaption}
+\item[{const sensor\-\_\-msgs\-::\-Laser\-Scan}]{msg}
+\end{DoxyParamCaption}
+)}}\label{classObstacleDetection_a31418bbbef60d8dab3d5daf413be6040}
+
+
+Callback function for the laser scan. Detects if the vehicle is about to collide with an obstacle or not. 
+
+detect if the vehicle is about to collide with an obstacle or not \hypertarget{classObstacleDetection_a77d48fccad655af0c933ec2fc8abab7e}{\index{Obstacle\-Detection@{Obstacle\-Detection}!get\-Distance\-Threshold@{get\-Distance\-Threshold}}
+\index{get\-Distance\-Threshold@{get\-Distance\-Threshold}!ObstacleDetection@{Obstacle\-Detection}}
+\subsubsection[{get\-Distance\-Threshold}]{\setlength{\rightskip}{0pt plus 5cm}double Obstacle\-Detection\-::get\-Distance\-Threshold (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classObstacleDetection_a77d48fccad655af0c933ec2fc8abab7e}
+
+
+return the current threshold for how close the vehicle should get to an object 
+
+\hypertarget{classObstacleDetection_a2f232b84a73da8e6092b71ed0a6f0f4e}{\index{Obstacle\-Detection@{Obstacle\-Detection}!set\-Distance\-Threshold@{set\-Distance\-Threshold}}
+\index{set\-Distance\-Threshold@{set\-Distance\-Threshold}!ObstacleDetection@{Obstacle\-Detection}}
+\subsubsection[{set\-Distance\-Threshold}]{\setlength{\rightskip}{0pt plus 5cm}void Obstacle\-Detection\-::set\-Distance\-Threshold (
+\begin{DoxyParamCaption}
+\item[{double}]{threshold}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classObstacleDetection_a2f232b84a73da8e6092b71ed0a6f0f4e}
+
+
+set the threshold for how close the vehicle should get to an object 
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+/home/viki/\-Documents/\-E\-N\-P\-M808\-X/\-Final/catkin\-\_\-ws/src/\-E\-N\-P\-M808\-\_\-\-Final/include/\hyperlink{obstacleDetection_8hpp}{obstacle\-Detection.\-hpp}\item 
+/home/viki/\-Documents/\-E\-N\-P\-M808\-X/\-Final/catkin\-\_\-ws/src/\-E\-N\-P\-M808\-\_\-\-Final/src/\hyperlink{obstacleDetection_8cpp}{obstacle\-Detection.\-cpp}\end{DoxyCompactItemize}

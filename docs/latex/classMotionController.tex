@@ -1,0 +1,137 @@
+\hypertarget{classMotionController}{\section{Motion\-Controller Class Reference}
+\label{classMotionController}\index{Motion\-Controller@{Motion\-Controller}}
+}
+
+
+\hyperlink{classMotionController}{Motion\-Controller} class handles determining vehicle control actions.  
+
+
+
+
+{\ttfamily \#include $<$motion\-Controller.\-hpp$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classMotionController_abcd258282d09d5abe23aa82bfe3a9962}{Motion\-Controller} (double forward\-Speed)
+\begin{DoxyCompactList}\small\item\em \hyperlink{classMotionController}{Motion\-Controller} constructor. \end{DoxyCompactList}\item 
+void \hyperlink{classMotionController_a3e0b57a37ce66bead9eee6638765638b}{determine\-Action} (const sensor\-\_\-msgs\-::\-Laser\-Scan\-::\-Const\-Ptr \&msg)
+\begin{DoxyCompactList}\small\item\em Determine a vehicle action based on results from the obstacle detector. \end{DoxyCompactList}\item 
+bool \hyperlink{classMotionController_a44ff223e1cf1b3f5e2d67a60e7426deb}{change\-Speed} (enpm808\-\_\-final\-::change\-Speed\-Service\-::\-Request \&req, enpm808\-\_\-final\-::change\-Speed\-Service\-::\-Response \&resp)
+\begin{DoxyCompactList}\small\item\em Response to the change speed service to set forward speed. \end{DoxyCompactList}\item 
+bool \hyperlink{classMotionController_a799786396899802c57501294a4daa837}{change\-Threshold} (enpm808\-\_\-final\-::change\-Threshold\-Service\-::\-Request \&req, enpm808\-\_\-final\-::change\-Threshold\-Service\-::\-Response \&resp)
+\begin{DoxyCompactList}\small\item\em Response to the change threshold service to set distance threshold. \end{DoxyCompactList}\item 
+bool \hyperlink{classMotionController_ae50963433b95da65ff5b6c6ab1e87e1d}{toggle\-Pause} (enpm808\-\_\-final\-::toggle\-Pause\-Motion\-::\-Request \&req, enpm808\-\_\-final\-::toggle\-Pause\-Motion\-::\-Response \&resp)
+\begin{DoxyCompactList}\small\item\em Response to the toggle pause motion service. \end{DoxyCompactList}\item 
+void \hyperlink{classMotionController_aaa153da5710d79c9e0ad7757bbafcc71}{set\-Forward\-Speed} (double speed)
+\begin{DoxyCompactList}\small\item\em change the forward speed of the robot \end{DoxyCompactList}\item 
+double \hyperlink{classMotionController_a37b2eea6aa4fff61aec4655a6ee8c8c7}{get\-Forward\-Speed} ()
+\begin{DoxyCompactList}\small\item\em return the current forward speed of the robot \end{DoxyCompactList}\item 
+geometry\-\_\-msgs\-::\-Twist \hyperlink{classMotionController_ae7a9bb384866b1da42e42c648490123f}{get\-Vehicle\-Action} ()
+\begin{DoxyCompactList}\small\item\em return the current vehicle action \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\hyperlink{classMotionController}{Motion\-Controller} class handles determining vehicle control actions. 
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classMotionController_abcd258282d09d5abe23aa82bfe3a9962}{\index{Motion\-Controller@{Motion\-Controller}!Motion\-Controller@{Motion\-Controller}}
+\index{Motion\-Controller@{Motion\-Controller}!MotionController@{Motion\-Controller}}
+\subsubsection[{Motion\-Controller}]{\setlength{\rightskip}{0pt plus 5cm}Motion\-Controller\-::\-Motion\-Controller (
+\begin{DoxyParamCaption}
+\item[{double}]{forward\-Speed}
+\end{DoxyParamCaption}
+)}}\label{classMotionController_abcd258282d09d5abe23aa82bfe3a9962}
+
+
+\hyperlink{classMotionController}{Motion\-Controller} constructor. 
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classMotionController_a44ff223e1cf1b3f5e2d67a60e7426deb}{\index{Motion\-Controller@{Motion\-Controller}!change\-Speed@{change\-Speed}}
+\index{change\-Speed@{change\-Speed}!MotionController@{Motion\-Controller}}
+\subsubsection[{change\-Speed}]{\setlength{\rightskip}{0pt plus 5cm}bool Motion\-Controller\-::change\-Speed (
+\begin{DoxyParamCaption}
+\item[{enpm808\-\_\-final\-::change\-Speed\-Service\-::\-Request \&}]{req, }
+\item[{enpm808\-\_\-final\-::change\-Speed\-Service\-::\-Response \&}]{resp}
+\end{DoxyParamCaption}
+)}}\label{classMotionController_a44ff223e1cf1b3f5e2d67a60e7426deb}
+
+
+Response to the change speed service to set forward speed. 
+
+\hypertarget{classMotionController_a799786396899802c57501294a4daa837}{\index{Motion\-Controller@{Motion\-Controller}!change\-Threshold@{change\-Threshold}}
+\index{change\-Threshold@{change\-Threshold}!MotionController@{Motion\-Controller}}
+\subsubsection[{change\-Threshold}]{\setlength{\rightskip}{0pt plus 5cm}bool Motion\-Controller\-::change\-Threshold (
+\begin{DoxyParamCaption}
+\item[{enpm808\-\_\-final\-::change\-Threshold\-Service\-::\-Request \&}]{req, }
+\item[{enpm808\-\_\-final\-::change\-Threshold\-Service\-::\-Response \&}]{resp}
+\end{DoxyParamCaption}
+)}}\label{classMotionController_a799786396899802c57501294a4daa837}
+
+
+Response to the change threshold service to set distance threshold. 
+
+\hypertarget{classMotionController_a3e0b57a37ce66bead9eee6638765638b}{\index{Motion\-Controller@{Motion\-Controller}!determine\-Action@{determine\-Action}}
+\index{determine\-Action@{determine\-Action}!MotionController@{Motion\-Controller}}
+\subsubsection[{determine\-Action}]{\setlength{\rightskip}{0pt plus 5cm}void Motion\-Controller\-::determine\-Action (
+\begin{DoxyParamCaption}
+\item[{const sensor\-\_\-msgs\-::\-Laser\-Scan\-::\-Const\-Ptr \&}]{msg}
+\end{DoxyParamCaption}
+)}}\label{classMotionController_a3e0b57a37ce66bead9eee6638765638b}
+
+
+Determine a vehicle action based on results from the obstacle detector. 
+
+\hypertarget{classMotionController_a37b2eea6aa4fff61aec4655a6ee8c8c7}{\index{Motion\-Controller@{Motion\-Controller}!get\-Forward\-Speed@{get\-Forward\-Speed}}
+\index{get\-Forward\-Speed@{get\-Forward\-Speed}!MotionController@{Motion\-Controller}}
+\subsubsection[{get\-Forward\-Speed}]{\setlength{\rightskip}{0pt plus 5cm}double Motion\-Controller\-::get\-Forward\-Speed (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classMotionController_a37b2eea6aa4fff61aec4655a6ee8c8c7}
+
+
+return the current forward speed of the robot 
+
+\hypertarget{classMotionController_ae7a9bb384866b1da42e42c648490123f}{\index{Motion\-Controller@{Motion\-Controller}!get\-Vehicle\-Action@{get\-Vehicle\-Action}}
+\index{get\-Vehicle\-Action@{get\-Vehicle\-Action}!MotionController@{Motion\-Controller}}
+\subsubsection[{get\-Vehicle\-Action}]{\setlength{\rightskip}{0pt plus 5cm}geometry\-\_\-msgs\-::\-Twist Motion\-Controller\-::get\-Vehicle\-Action (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classMotionController_ae7a9bb384866b1da42e42c648490123f}
+
+
+return the current vehicle action 
+
+\hypertarget{classMotionController_aaa153da5710d79c9e0ad7757bbafcc71}{\index{Motion\-Controller@{Motion\-Controller}!set\-Forward\-Speed@{set\-Forward\-Speed}}
+\index{set\-Forward\-Speed@{set\-Forward\-Speed}!MotionController@{Motion\-Controller}}
+\subsubsection[{set\-Forward\-Speed}]{\setlength{\rightskip}{0pt plus 5cm}void Motion\-Controller\-::set\-Forward\-Speed (
+\begin{DoxyParamCaption}
+\item[{double}]{speed}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{classMotionController_aaa153da5710d79c9e0ad7757bbafcc71}
+
+
+change the forward speed of the robot 
+
+\hypertarget{classMotionController_ae50963433b95da65ff5b6c6ab1e87e1d}{\index{Motion\-Controller@{Motion\-Controller}!toggle\-Pause@{toggle\-Pause}}
+\index{toggle\-Pause@{toggle\-Pause}!MotionController@{Motion\-Controller}}
+\subsubsection[{toggle\-Pause}]{\setlength{\rightskip}{0pt plus 5cm}bool Motion\-Controller\-::toggle\-Pause (
+\begin{DoxyParamCaption}
+\item[{enpm808\-\_\-final\-::toggle\-Pause\-Motion\-::\-Request \&}]{req, }
+\item[{enpm808\-\_\-final\-::toggle\-Pause\-Motion\-::\-Response \&}]{resp}
+\end{DoxyParamCaption}
+)}}\label{classMotionController_ae50963433b95da65ff5b6c6ab1e87e1d}
+
+
+Response to the toggle pause motion service. 
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+/home/viki/\-Documents/\-E\-N\-P\-M808\-X/\-Final/catkin\-\_\-ws/src/\-E\-N\-P\-M808\-\_\-\-Final/include/\hyperlink{motionController_8hpp}{motion\-Controller.\-hpp}\item 
+/home/viki/\-Documents/\-E\-N\-P\-M808\-X/\-Final/catkin\-\_\-ws/src/\-E\-N\-P\-M808\-\_\-\-Final/src/\hyperlink{motionController_8cpp}{motion\-Controller.\-cpp}\end{DoxyCompactItemize}
