@@ -98,8 +98,6 @@ $ catkin_make run_tests && catkin_test_results
 You should see a summary of the number of tests passed/failed output on the screen. 
 
 ## <a name="todo"></a> TODO
-- Implement services:
-  - "Stop motion" command
-  - "Resume motion" command
 - Output saved images and bag files to specified directory
 - Document workaround for "stopping in place"--had to send a non-zero, very small angular rate
+- Fix gmapping-turtlebot issues to create an occupancy grid in the Nootrix Ubuntu VM

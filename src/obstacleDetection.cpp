@@ -41,8 +41,6 @@
  *  @copyright BSD
  */
 
-#include <octomap/octomap.h>
-#include <octomap/OcTree.h>
 #include <stdlib.h>
 #include <ros/ros.h>
 #include "obstacleDetection.hpp"
@@ -52,7 +50,6 @@
  */
 ObstacleDetection::ObstacleDetection(double threshold) :
 		distanceThreshold(threshold) {
-	worldModel = new octomap::OcTree(0.1);
 }
 
 /**

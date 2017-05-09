@@ -27,12 +27,11 @@ generate_messages(DEPENDENCIES std_msgs)
 catkin_package()
 
 ## Build vehicle 
-find_package(octomap REQUIRED)
 find_package( OpenCV REQUIRED COMPONENTS core imgproc highgui )
-include_directories(include ${catkin_INCLUDE_DIRS} ${OCTOMAP_INCLUDE_DIRS} ${OpenCV_INCLUDE_DIRS})
+include_directories(include ${catkin_INCLUDE_DIRS} ${OpenCV_INCLUDE_DIRS})
 
 add_executable(vehicle src/main.cpp src/vehicle.cpp src/camera.cpp src/motionController.cpp src/obstacleDetection.cpp)
-target_link_libraries(vehicle ${catkin_LIBRARIES} ${OCTOMAP_LIBRARIES} ${OpenCV_LIBS})
+target_link_libraries(vehicle ${catkin_LIBRARIES} ${OpenCV_LIBS})
 
 
 ## TESTING
@@ -55,7 +54,6 @@ if(CATKIN_ENABLE_TESTING)
   target_link_libraries(
 	enpm808_finalTest
 	${catkin_LIBRARIES}
-	${OCTOMAP_LIBRARIES}
 	${OpenCV_LIBS}
   )
   add_dependencies(

@@ -41,8 +41,6 @@
  *  @copyright BSD
  */
 
-#include <octomap/octomap.h>
-#include <octomap/OcTree.h>
 #include <stdlib.h>
 #include <ros/ros.h>
 #include <sensor_msgs/LaserScan.h>
@@ -80,11 +78,6 @@ public:
 	;
 
 private:
-	/**
-	 * @brief container for the world model, stored as an OcTree
-	 */
-	octomap::OcTree* worldModel;
-
 	/**
 	 * @brief container for a ROS node handler
 	 */
